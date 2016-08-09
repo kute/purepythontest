@@ -13,6 +13,7 @@
 from whoosh.index import create_in, open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
+from whoosh.index import EmptyIndexError
 from kute.caltime.caltime import perf_counter, process_time
 import random
 import logging
@@ -50,11 +51,12 @@ def create_schema():
 
 @process_time
 def create_index(schema, indexdir):
-    ix = open_dir(indexdir)
-    if not ix:
+    try:
+        ix = open_dir(indexdir)
+        return ix
+    except EmptyIndexError as error:
         logging.info("open failed, then created")
-        ix = create_in(dirname=indexdir, schema=schema)
-    return ix
+        return create_in(dirname=indexdir, schema=schema)
 
 
 @process_time
@@ -96,7 +98,7 @@ if __name__ == '__main__':
     index = create_index(schema, create_index_dir("indexdir"))
 
     # 3. add document
-    create_writer(index, 10000)
+    # create_writer(index, 10000)
 
     # 4. search
     querystr = "content8"
