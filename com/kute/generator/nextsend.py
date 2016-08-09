@@ -1,44 +1,53 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# __author__ = 'kute'
-# __mtime__ = '16/7/28 22:07'
+"""
+yield 协同程序示例（协程，只有一个线程在运行）
+@version: 1.0
+@ __author__: longbai
+@ __file__: nextsend.py
+@ __mtime__: 2016/7/29 14:05
+
+
+
+
+1. 首先调用c.next()启动生成器；
+2. 然后，一旦生产了东西，通过c.send(n)切换到consumer执行；
+3. consumer通过yield拿到消息，处理，又通过yield把结果传回；
+4. produce拿到consumer处理的结果，继续生产下一条消息；
+5. produce决定不生产了，通过c.close()关闭consumer，整个过程结束。
+
+整个流程无锁，由一个线程执行，produce和consumer协作完成任务，所以称为“协程”，而非线程的抢占式多任务。
 
 """
-http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013868328689835ecd883d910145dfa8227b539725e5ed000
-
-http://blog.csdn.net/pfm685757/article/details/49924099
-
-协同程序(协程)示例(只有一个线程在运行,只进行上下文切换)
-
-
-"""
-
-
 import time
 
 
 def consumer():
-    r = ''
+    """"
+      生成器
+    """
+    result = ""
     while True:
-        n = yield r
-        if not n:
+        recieve = yield result
+        if not recieve:
             return
-        print('[CONSUMER] Consuming %s...' % n)
+        print ("consumering the value %s" % recieve)
         time.sleep(1)
-        r = '200 OK'
+        result = "consumering %s return 200 ok" % recieve
 
 
-def produce(c):
-    c.next()
-    for n in range(1, 10):
-        print('[PRODUCER] Producing %s...' % n)
-        r = c.send(n)
-        print('[PRODUCER] Consumer return: %s' % r)
+def producer(c):
+    c.next()  # 启动生成器 c.send(None)
+    for i in range(1, 10):
+        time.sleep(1)
+        print ("producing the value %s" % i)
+        result = c.send(i)
+        print( result)
     c.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     c = consumer()
-    produce(c)
+    producer(c)
 
