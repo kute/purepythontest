@@ -6,6 +6,10 @@
 
 """
 
+将 com.kute.log.logging.conf 这个package整个放到 你的site-packages里，随意起个名称
+例如easylog，然后以后就可以直接用了
+参加：test.testeasylog.py
+
 """
 import os
 import logging
