@@ -7,24 +7,28 @@
 @ __file__: processortest.py
 @ __mtime__: 2016/8/12 18:38
 
+日志处理器
+
 """
 
 import os
 import sys
-from logbook import Processor, StreamHandler, DEBUG, Logger
+from logbook import Processor, StreamHandler, DEBUG, Logger, FileHandler
 
-my_handler = StreamHandler(sys.stdout, level=DEBUG)
+my_handler = FileHandler("test.log", encoding="utf-8", level=DEBUG)
+# my_handler = StreamHandler(sys.stdout, level=DEBUG)
 
 
-def inject_cwd(record):
-    print(record.extra['cwd'])
-    record.extra['cwd'] = os.getcwd()
-    print(record.extra['cwd'])
+def log_other_info(record):
+    """
+    """
+    record.extra['myname'] = 'kute'
+    record.extra['mycwd'] = os.getcwd()
 
 
 if __name__ == "__main__":
     with my_handler.applicationbound():
-        with Processor(inject_cwd).applicationbound():
+        with Processor(log_other_info).applicationbound():
             mylog = Logger("processor")
             mylog.notice("notice msg.")
             # mylog.notice("info msg.")
