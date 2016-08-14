@@ -27,19 +27,19 @@ Message:
 {record.message}
 """
 
-handler = MailHandler(
-    from_addr="1395730364@qq.com",
-    recipients=["longbai@corp.netease.com"],
-    subject="subject logbook mailhandler test",
-    # server_addr="",
-    level=DEBUG,
-    format_string=formatstr
-)
+# handler = MailHandler(
+#     from_addr="yyy@qq.com",
+#     recipients=["xxx@qq.com"],
+#     subject="subject logbook mailhandler test",
+#     # server_addr="",
+#     level=DEBUG,
+#     format_string=formatstr
+# )
 
 ghandler = GMailHandler(
-    account_id="kutekute00@gmail.com",
-    password="xxxxxx",
-    recipients=["1395730364@qq.com"],
+    account_id="xxx@qq.com",
+    password="password",
+    recipients=["uuuu@qq.com"],
     format_string=formatstr
 )
 
@@ -50,10 +50,14 @@ def main():
 
 
 def inject_other_info(record):
-    record.extra['myscret'] = "not tell you"
+    record.extra['myscret'] = "do not tell you"
     record.extra.update(
         # some other info
-        pp="pp info"
+        pp="pp info",
+        ip="127.0.0.1",
+        url="http://logbook.readthedocs.io/en/stable/",
+        method="GET",
+        myscret="do not tell you yet"
     )
 
 

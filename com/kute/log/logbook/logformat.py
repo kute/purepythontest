@@ -19,7 +19,8 @@ from logbook import StreamHandler, info
 import sys
 
 # 1. set format_string
-sh = StreamHandler(sys.stdout, format_string="[{record.time}] {record.level_name}: {record.channel}：{record.message}")
+sh = StreamHandler(sys.stdout,
+                   format_string="[{record.time}] {record.level_name}: {record.channel}：{record.message}")
 
 # 2. set format_string
 sh.format_string = "[{record.time}] {record.level_name}: {record.channel}：{record.message}"
