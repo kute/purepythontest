@@ -7,6 +7,8 @@
 @ __file__: mailhandler.py
 @ __mtime__: 2016/8/13 17:26
 
+发送日志到邮箱
+
 """
 
 from logbook import MailHandler, GMailHandler, DEBUG, Logger, Processor
@@ -36,6 +38,7 @@ Message:
 #     format_string=formatstr
 # )
 
+# GMail 邮箱
 ghandler = GMailHandler(
     account_id="xxx@qq.com",
     password="password",
