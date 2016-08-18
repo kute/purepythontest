@@ -8,6 +8,7 @@
 
 """
 
+print("import")
 
 def main():
     pass

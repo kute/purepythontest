@@ -12,6 +12,8 @@
 
 import imghdr
 import os
+from com.kute.file.pathlib.fileutil import FileUtil
+
 
 _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
 
@@ -22,6 +24,7 @@ def getfilepath(filename):
 
 def main():
     filepath = getfilepath("a.jpg")
+    print(filepath)
     print(imghdr.what(filepath))
 
 
