@@ -15,15 +15,16 @@ import os
 from com.kute.file.pathlib.fileutil import FileUtil
 
 
-_resources_dir = os.path.join(os.path.dirname(__file__), "resources")
-
-
-def getfilepath(filename):
-    return os.path.join(_resources_dir, filename)
+# _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
+#
+#
+# def getfilepath(filename):
+#     return os.path.join(_resources_dir, filename)
 
 
 def main():
-    filepath = getfilepath("a.jpg")
+    # filepath = getfilepath("a.jpg")
+    filepath = FileUtil.getfilepath(FileUtil.IMAGE, "a.jpg")
     print(filepath)
     print(imghdr.what(filepath))
 
