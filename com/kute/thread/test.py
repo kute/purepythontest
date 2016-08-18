@@ -16,7 +16,7 @@ from threading import Thread
 class Th(Thread):
     def run(self):
         time.sleep(2)
-        print "sleep-%s-%s" % (self.getName(), self.ident)
+        print ("sleep-%s-%s" % (self.getName(), self.ident))
 
     def __init__(self, name=None):
         Thread.__init__(self, name=name)
@@ -24,19 +24,19 @@ class Th(Thread):
 
 
 def method_2():
-    print "begin"
+    print ("begin")
     for i in range(1, 10):
         t = Th("testthread-%s" % i)
         t.setDaemon(True)
         t.start()
         t.join()
-    print "end"
+    print ("end")
 
 
 def dowork(i):
     # time.sleep(5)
-    print "current num is %d" % i
-    print
+    print ("current num is %d" % i)
+    print()
 
 
 def method_1():

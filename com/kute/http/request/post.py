@@ -42,19 +42,19 @@ def main():
             timeout=1000,
             hooks=hooks
         )) as res:
-            print "over"
+            print("over")
     except Exception as e:
-        print e.message
+        print( e.message)
 
 
 def printInfo(res, *args, **kwargs):
-    print res.url
-    print res.status_code
-    print res.text
-    print res.content
-    print res.headers
-    print res.cookies
-    print res.request.headers
+    print(res.url)
+    print( res.status_code)
+    print (res.text)
+    print (res.content)
+    print (res.headers)
+    print (res.cookies)
+    print (res.request.headers)
 
 
 if __name__ == '__main__':

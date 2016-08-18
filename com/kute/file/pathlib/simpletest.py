@@ -13,6 +13,7 @@ from pathlib import Path
 
 def main():
     path = Path(".")
+    print(path.cwd())
 
     # 当前目录下的所有文件(或者目录)
     print([x.name for x in path.iterdir()])
@@ -20,7 +21,8 @@ def main():
     # resources 目录下的所有匹配文件
     print(list(path.glob("../resources/*.txt")))
 
-    path = Path("/Users/kute/work/pycharmwork/purepythontest")
+    # purepythontest dir
+    path = Path("../../../../")
 
     # 定位到具体文件或者目录
     pathlibdir = path / "com" / "kute" / "file" / "pathlib"
@@ -29,6 +31,8 @@ def main():
 
     # 定位到具体文件
     urlspath = path / "com" / "kute" / "file" / "resources" / "urls.txt"
+    print(urlspath.suffix)
+    print(urlspath.name)
     with urlspath.open() as f:
         print(f.readlines())
 
