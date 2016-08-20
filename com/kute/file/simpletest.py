@@ -21,7 +21,8 @@ def getfilepath(filename):
 def read_file():
     filepath = getfilepath("urls.txt")
     with open(file=filepath, mode="r") as f:
-        for line in f:
+        # for line in f:
+        for i in range(20):
             # print(line)
             # write_by_line(line)
             write_list_lines(f.readlines())
@@ -35,7 +36,7 @@ def write_by_line(line):
 
 # 按批写入
 def write_list_lines(lines):
-    with open(file=getfilepath("writefile.txt"), mode="a") as f:
+    with open(file=getfilepath("writefile.txt"), mode="w") as f:
         f.writelines(lines)
 
 

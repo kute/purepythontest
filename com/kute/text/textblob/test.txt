@@ -1,0 +1,32 @@
+ When it comes to open-source licenses, developers have their fair share of choices (GPL, BSD, MIT, Apache, etc.), all of them with their own pros and cons. The same goes for commercial licenses. MySQL founder Michael “Monty” Widenius and his co-founder David Axmark , however, came up with a different model a few years ago: the Business Source License (BSL).
+
+This new license offers an alternative to the closed-source and open-core licenses that many startups choose for their software, and, for the first time, Widenius’s new company, MariaDB , is now using it for one of its products.
+
+In some ways, the BSL is akin to a freemium model for software licensing (with an open-source twist). As Widenius explained to me, the BSL allows developers to set a limit for how many servers/CPUs/etc. their software can run on in production (there are no usage limits for test environments, only production usage). Usage above that incurs a licensing fee.
+
+That sounds like a pretty standard commercial license, but the twist here is that all of the source code is available at all times and the BSL license has an expiration date. After a set amount of time (say three years), the license expires and reverts to an open-source license like the GPL or any other license the developer chooses.
+
+“This can create a totally new ecosystem,” Widenius told me. “And even if you don’t get open source at once, we will create many more open source applications in the future.” Those are strong words; given his experience in the open-source world, it’s worth taking a closer look at how and why he and Axmark came up with the BSL.
+
+This can create a totally new ecosystem. And even if you don’t get open source at once, we will create many more open source applications in the future.
+— Monty Widenius
+
+Widenius has quite a bit of experience with licenses and, to a large degree, he made his fortune because of the licensing choice he made for MySQL. “For some products like MySQL, GPL is actually the perfect license because MySQL is something companies want to integrate into their own products,” he explained. To integrate a GPL-licensed product into your own product, you’d have to open source your software, too. For those users, MySQL AB, the company Widenius and Axmark founded, offered a commercial license.
+
+At the time they sold MySQL AB to Sun in 2008, 70 percent of the company’s income came from licenses. “That was the reason that MySQL had a huge valuation,” Widenius said. “We were a product company and people had to pay for it in certain situations.”
+
+Widenius actually wanted to use a variation of the BSL earlier, “but back then, the management team wasn’t as far-seeing as our current one, so they decided to go with closed source.” Then, a few years ago, he noticed that a lot of startups were coming to his Open Ocean venture capital firm and they wanted to do open source for end-user products. For those companies, the dual-license model that worked so well for MySQL wasn’t going to work, because those users weren’t going to embed the software into their own products and hence had no reason to pay for a license.
+
+What most companies that want to do open source do in that case is try to build their business on offering services around these open-source tools. Widenius does not believe in this model (though he acknowledges that it has worked for some companies). “This works for companies that support a project — people are giving support for Ubuntu and make money off that,” he said. “But the companies that don’t have licenses, they can almost never make a product.” Why? Because if you get a 10 percent margin off a good support person, you need 10 support people to pay for a developer. In his view, this model doesn’t scale.
+
+So at MariaDB, the team decided to now license the latest version of its MaxScale database proxy under the BSL (MariaDB itself is a fork of MySQL, so it is forever bound to the open-source GPL license that MySQL is licensed under).
+
+As far as Widenius is aware, two or three other companies have already used the license, too, but he believes many others are sitting on the sidelines waiting for a large company to make the move. The team is also working on documents that will give developers a framework for moving their software to the BSL.
+Related Articles
+The White House releases policy to help government agencies go open source Facebook tries a new way to release open-source projects Bulgaria now requires (some) government software to be open source
+
+Developers who want to adopt the BSL for a new project only need to fill in four lines: the name of the product, the restrictions that set the limits for when users will have to pay, the change data for when the license reverts to an open-source license and which license it reverts to.
+
+Because you end up moving the license dates up with every update, developers will have an incentive to keep their software up-to-date and to innovate. But if they don’t — or if the user is happy to use an old product — then the new license will apply once the change data arrives. This also means that when a developer goes out of business, the software will become open source after the change date and the community can pick up the work.
+
+“Lots of people will criticize this for the wrong reasons,” Widenius told me. “But I think this is a chance to change the future of open source for the better by producing more open source — even if there’s a little bit of time delay.”

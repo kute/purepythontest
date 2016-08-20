@@ -42,7 +42,7 @@ class FileUtil(object):
         _resources_dir = Path(__file__).parent.parent.parent.parent.parent / "resources"
         filedir = _resources_dir / dirname
         if not filedir.is_dir():
-            raise FileNotFoundError("dir [{}] not found".format(dirpath))
+            raise FileNotFoundError("dir [{}] not found".format(filedir))
         filepath = filedir / filename
         if not filepath.is_file():
             raise FileNotFoundError("file [{}] not found".format(filepath))
