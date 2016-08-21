@@ -9,8 +9,12 @@
 
 """
 
+from eve import Eve
+
+
 def main():
-    print("hello")
+    server = Eve()
+    server.run(threaded=True)
 
 
 if __name__ == "__main__":
