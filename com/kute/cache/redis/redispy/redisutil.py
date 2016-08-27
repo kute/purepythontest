@@ -129,6 +129,9 @@ class RedisUtil(object):
         """
         return self._connection_redis().register_script(lua)
 
+    def response_callback(self):
+        print(self._connection_redis().set_response_callback())
+
 
 def main():
     ru = RedisUtil(password="kuteredis")
