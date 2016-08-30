@@ -12,7 +12,7 @@ def main():
     try:
         requests.get("https://www.baidu.com/")
     except Exception as e:
-        print e
+        print( e)
 
 
 if __name__ == '__main__':

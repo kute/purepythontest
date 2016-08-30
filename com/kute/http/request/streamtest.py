@@ -17,11 +17,11 @@ def main():
         response=callback_function
     )
     with closing(requests.get(url, stream=True, hooks=hook)) as res:
-        print res.json()
+        print(res.json())
 
 
 def callback_function(res, *args, **kwargs):
-    print res.url
+    print(res.url)
 
 
 if __name__ == '__main__':

@@ -14,16 +14,16 @@ def main():
     url = "https://github.com/timeline.json"
     getparams = {"a": "1", "b": 2}
     response = requests.get(url=url, params=getparams)
-    print response.content
-    print response.text
-    print response.encoding
-    print response.json()
-    print response.url
-    print response.status_code == requests.codes.ok
-    print response.headers
-    print response.headers['X-Request-Id'], response.headers.get('X-Request-Id')
+    print(response.content)
+    print( response.text)
+    print( response.encoding)
+    print( response.json())
+    print( response.url)
+    print( response.status_code == requests.codes.ok)
+    print( response.headers)
+    print( response.headers['X-Request-Id'], response.headers.get('X-Request-Id'))
     # 使用响应对象的 history 方法来追踪重定向, 列表按照从最老到最近的请求进行排序
-    print response.history
+    print( response.history)
 
     # 将读取的大文本数据写入文件
     filename = "content.txt"
@@ -31,7 +31,7 @@ def main():
         for chunk in response.iter_content(100):
             fd.write(chunk)
 
-    print "\n"
+    print("\n")
 
     # 添加header
     url = "https://api.github.com/some/endpoint"

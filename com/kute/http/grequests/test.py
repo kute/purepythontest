@@ -21,12 +21,12 @@ def main():
         'http://kennethreitz.com'
     ]
     res = (grequests.get(url) for url in urls)
-    print grequests.map(res, exception_handler=exception_handler)
+    print(grequests.map(res, exception_handler=exception_handler))
 
 
 def exception_handler(request, response):
-    print request.url
-    print "request error"
+    print(request.url)
+    print("request error")
 
 
 if __name__ == '__main__':
