@@ -6,6 +6,7 @@
 
 import requests
 from contextlib import closing
+from com.kute.http.example.getcookiefrom163 import GetCookieFrom163Util
 
 
 def main():
@@ -14,7 +15,7 @@ def main():
 
     body = dict(
         board="news_bbs",
-        content="人微言轻的,没办法啊"
+        content="人微言轻的,没办法啊3"
     )
 
     headers = {
@@ -22,9 +23,10 @@ def main():
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:47.0) Gecko/20100101 Firefox/47.0"
     }
 
+    util = GetCookieFrom163Util("xxxxxxx", "xxxxxxxx")
+
     cookies = {
-        "NTES_SESS": "vBucJvzITsBkiyzTcDY7eXulUzW67YpkxhLTr_scc45YY8cPDpS9Gro9_UDvE6kW3BhDKodce.DmUNsq20rEyMcM1vzJEDp"
-                     "t1lRUYoYJjF4C8RSn49iBnZogpw6Iz6tH5QM4seUuxjRzhSP9lKifJwOnIiDz4CXEfp1LGB8T3r264weO7HZL7YNrU"
+        "NTES_SESS": util.cookie
     }
 
     # 每次响应生成后调用
