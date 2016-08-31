@@ -5,7 +5,7 @@
 # __mtime__ = '16/8/30 20:37'
 
 """
-
+正则匹配
 """
 
 import requests
@@ -45,13 +45,14 @@ class GetCookieFrom163Util(object):
     def cookie(self):
         res = self._dologin()
         if res:
-            text = re.search(r'(loginCookie=[^&].+&persistCookie)', res).group(0)
-            return text[text.find("loginCookie=") + 12:text.find("&persistCookie")]
+            reg = r'http://reg\.youdao\.com/crossdomain\.jsp\?username=' + self.username + '&loginCookie=(.*)&persistCookie'
+            text = re.search(reg, res).group(0)
+            return text[text.index("loginCookie=") + 12:text.index("&persistCookie")]
         return None
 
 
 def main():
-    util = GetCookieFrom163Util("xxxx", "xxxx")
+    util = GetCookieFrom163Util("xxxxx@qq.com", "xxxxxx")
     print(util.cookie)
 
 
