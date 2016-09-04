@@ -4,6 +4,10 @@
 # __author__ = 'kute'
 # __mtime__ = '16/6/15 11:23'
 
+"""
+字符串替换性能比较
+"""
+
 
 orignal_str = "sdf a sdi sdksdj sd fsjdkfjwejsd sd fsdjkfs fsdk fsdj skdjf sdf sdjf skdjf sdfj sdkfj sdfd sd s s s"
 
@@ -45,7 +49,7 @@ def _time_analyze_(func):
     for i in range(10000):
         func()
     finish = clock()
-    print "{:<20}{:10.6} s".format(func.__name__ + ":", finish - start)
+    print("{:<20}{:10.6} s".format(func.__name__ + ":", finish - start))
 
 
 if __name__ == '__main__':
