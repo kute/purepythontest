@@ -21,7 +21,7 @@ def main():
     size = newimage.size
     font = ImageFont.truetype('simhei.ttf', 45)
     draw = ImageDraw.Draw(newimage)
-    draw.text((size[0] * 0.2, size[1] * 0.2), unicode(text[random.randint(0, len(text) - 1)], "utf-8"), font=font)
+    draw.text((size[0] * 0.2, size[1] * 0.2), str(text[random.randint(0, len(text) - 1)], "utf-8"), font=font)
     newimage.save("b.png")
 
 
