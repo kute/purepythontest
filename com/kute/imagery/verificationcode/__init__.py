@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'kute'
-# __mtime__ = '16/9/4 22:31'
+# __mtime__ = '16/9/6 22:00'
 
 """
-http://pandas.pydata.org/
-
 
 """
 

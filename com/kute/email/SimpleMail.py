@@ -51,8 +51,8 @@ class MailUtil(object):
             server.sendmail(self.fromemail, self.toemaillist, msg.as_string())
             server.quit()
             return json.dumps({"code": 1, "msg": "send ok"})
-        except Exception, e:
-            print e  # http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
+        except Exception as e:
+            print(e)  # http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
             return json.dumps({"code": 0, "msg": e.message})
 
 if __name__ == '__main__':
@@ -64,4 +64,4 @@ if __name__ == '__main__':
     responsejson = tool.sendtextmail(fromemail='username@163.com',
                                      toemaillist=['xxx@qq.com','yyy@gmail.com'],
                                      simpletextbody='晚上在哪里吃饭啊')
-    print responsejson
+    print(responsejson)
