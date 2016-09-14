@@ -9,7 +9,7 @@
 """
 import tkinter
 from tkinter import Menu
-from tkinter.messagebox import askokcancel, askquestion, askyesno, showwarning, showerror, showinfo
+from tkinter.messagebox import askokcancel, askquestion, askyesno, showwarning, showerror, showinfo, askretrycancel
 
 
 class TestMenu(Menu):

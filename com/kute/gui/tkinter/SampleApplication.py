@@ -11,7 +11,7 @@
 
 import tkinter
 from tkinter import Frame, Menu
-from com.kute.gui.tkinter import test_menu, file_menu
+from com.kute.gui.tkinter import test_menu, file_menu, help_menu
 
 
 class SampleApplication(tkinter.Frame):
@@ -39,6 +39,8 @@ class SampleApplication(tkinter.Frame):
         self.menubar.add_cascade(label=filemenu.label, menu=filemenu)
         testmenu = test_menu.TestMenu(master=self.menubar)
         self.menubar.add_cascade(label=testmenu.label, menu=testmenu)
+        helpmenu = help_menu.HelpMenu(master=self.menubar)
+        self.menubar.add_cascade(label=helpmenu.label, menu=helpmenu)
         # 加载菜单
         self.master.config(menu=self.menubar)
 
