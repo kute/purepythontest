@@ -8,7 +8,7 @@
 
 """
 import tkinter
-from tkinter import Menu
+from tkinter import Menu, Label, Entry, StringVar
 from tkinter.messagebox import askokcancel, askquestion, askyesno, showwarning, showerror, showinfo, askretrycancel
 
 
@@ -48,9 +48,25 @@ class TestMenu(Menu):
             print("cancel retry")
 
     def show_warning(self):
-        show = showwarning(title="show warning title", message="ClassNotFound........")
-        if show == "ok":
-            print("show warning ok")
+        showwarning(title="show warning title", message="warning msg")
+
+    def show_error(self):
+        showerror(title="show error title", message="error msg")
+
+    def show_info(self):
+        showinfo(title="show info title", message="info msg")
+
+    def show_wegit(self):
+        # 不指定master默认为root
+        l1 = Label(text="单行文本", bg="green", font=("Arial", 12), width=10, height=2)
+        l1.pack()
+        var = StringVar()  # 绑定变量
+        entry = Entry(textvariable=var)
+        # var.get()   获取文本
+        # var.set("value")  设置文本
+        entry.pack()
+
+
 
     @property
     def label(self):
@@ -61,6 +77,11 @@ class TestMenu(Menu):
         self.add_command(label="yes or no", command=self.ask_yes_no)
         self.add_command(label="ask question", command=self.ask_question)
         self.add_command(label="ask retry cancel", command=self.ask_retry_cancel)
+        self.add_separator()
         self.add_command(label="show warning", command=self.show_warning)
+        self.add_command(label="show error", command=self.show_error)
+        self.add_command(label="show info", command=self.show_info)
+        self.add_separator()
+        self.add_command(label="显示各种组件", command=self.show_wegit)
         self.add_separator()
         self.add_command(label="Quit", command=self.quit)

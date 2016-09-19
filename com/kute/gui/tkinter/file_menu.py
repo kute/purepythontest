@@ -11,6 +11,7 @@ import tkinter
 from tkinter import Menu
 from tkinter.filedialog import askopenfilename
 from tkinter.colorchooser import askcolor
+from tkinter.messagebox import showwarning
 
 
 class FileMenu(Menu):
@@ -28,6 +29,9 @@ class FileMenu(Menu):
         single file
         """
         filename = askopenfilename(filetypes=[("text", "*.txt"), ("xml", "*.xml")])
+        if not filename:
+            showwarning(title="警告", message="未选择任何文件")
+            return
         try:
             with open(filename, mode="r", encoding="utf-8") as f:
                 for line in f:
