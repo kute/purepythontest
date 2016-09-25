@@ -52,6 +52,7 @@ def main():
 
     a = np.fromfunction(lambda x, y: 10 * x + y, (5, 4), dtype=int)
     print(a)
+    a[2][3] == a[2, 3]
     a[2, 3]  # 一维 可以切片, 索引, 多维 数组可以每个轴有一个索引。这些索引由一个逗号分割的元组给出
     a[1, 1: 3]  # [11, 12]
     a[0: 5, 1]  # [1, 11, 21, 31, 41]
@@ -71,6 +72,14 @@ def main():
     b = np.arange(4, 8).reshape((2, 2))
     easylog.info(np.vstack((a, b)))  # 垂直组合,增加 行
     easylog.info(np.hstack((a, b)))  # 水平组合, 增加列
+
+    # 布尔数组索引
+    a = np.arange(12).reshape(3, 4)
+    a[a > 4]  # [ 5  6  7  8  9 10 11]
+
+    np.arange(24).shape = 2, -1, 4  # 这里的-1表示省略一个 维度声明, 是可以被推导出来的
+
+    a = np.mat("1, 2; 4, 3")
 
 
 if __name__ == '__main__':
