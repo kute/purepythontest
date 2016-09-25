@@ -10,6 +10,8 @@ http://pandas.pydata.org/
 
 http://pda.readthedocs.io/en/latest/chp4.html
 
+http://pda.readthedocs.io/en/latest/chp5.html
+
 
 
 

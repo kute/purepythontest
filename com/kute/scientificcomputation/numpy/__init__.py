@@ -9,6 +9,8 @@ http://www.numpy.org/
 http://pda.readthedocs.io/en/latest/chp4.html
 
 http://www.pythontip.com/blog/post/10893/
+
+http://docs.scipy.org/doc/numpy/reference/
 """
 
 
