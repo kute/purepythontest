@@ -5,16 +5,15 @@
 # __mtime__ = '16/7/28 21:32'
 
 import gevent
+import random
 from gevent import socket
 import time
 
 
 def printnow(n):
-    a = n + time.clock()
-    print (a)
-    time.sleep(n)
-    print (a, "asdf")
-    return a
+    time.sleep(random.randint(2, 3))
+    print(n)
+    return n
 
 
 def main():
