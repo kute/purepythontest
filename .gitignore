@@ -89,3 +89,8 @@ ENV/
 
 .ropeproject
 '.idea' 
+/test/netease/*
+.idea/
+com/kute/algorithms/test.py
+com/kute/search/Whoosh/quichstart/indexdir/MAIN_j2na3lgzc4hqz9ub.seg
+com/kute/search/Whoosh/quichstart/resources/
