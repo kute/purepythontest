@@ -7,6 +7,8 @@
 @ __file__: synchronous_asynchronous.py
 @ __mtime__: 2016/7/29 18:44
 
+同步 异步 示例
+
 """
 import gevent
 import random

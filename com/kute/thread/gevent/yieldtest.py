@@ -3,6 +3,7 @@
 
 # __author__ = 'kute'
 # __mtime__ = '16/7/28 22:03'
+#  yield  实现的生产者-消费者 模式
 
 
 import time
@@ -23,12 +24,12 @@ def produce(c):
     c.next()
     n = 0
     while n < 5:
-        n = n + 1
+        n += 1
         print('[PRODUCER] Producing %s...' % n)
         r = c.send(n)
         print('[PRODUCER] Consumer return: %s' % r)
     c.close()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     c = consumer()
     produce(c)
