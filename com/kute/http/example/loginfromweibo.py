@@ -8,6 +8,8 @@
 
 模拟微博登陆
 
+https://github.com/yoyzhou/weibo_login/blob/master/weibo_login.py
+
 """
 
 import requests
@@ -16,6 +18,7 @@ import time
 import datetime
 import json
 import rsa
+import binascii
 from kute.easylog.easylog import geteasylog
 
 
@@ -38,10 +41,14 @@ class WeiBoLogin(object):
         self.smsurl = ""
         self.pubkey = ""
 
+
     def prelogin_request(self):
+        """
+        call before login_request
+        """
         preloginurl = self._pre_login_url()
         response = requests.get(preloginurl)
-        easylog.info(response.text)
+        # easylog.info(response.text)
         if response.status_code == 200:
             resjson = json.loads(response.text, encoding="utf-8")
             self.servertime = resjson["servertime"]
@@ -57,13 +64,17 @@ class WeiBoLogin(object):
 
     def login_request(self):
         params = self._build_login_param()
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0"
+        }
         try:
             response = requests.post(
                 url=self._login_url(),
+                headers=headers,
                 data=params
             )
             if response.status_code == 200:
-                pass
+                easylog.info(response.text)
             else:
                 raise Exception
         except Exception as e:
@@ -71,37 +82,40 @@ class WeiBoLogin(object):
 
     def _get_pwd(self):
         rsaPublickey = int(self.pubkey, 16)
-        key = rsa.PublicKey(rsaPublickey, 65537)#create public key
-        message = str(self.servertime) + '\t' + str(self.nonce) + '\n' + str(self.password)#create clear text
-        passwd = rsa.encrypt(message, key)#cipher text
-        passwd = binascii.b2a_hex(passwd)#convert the cipher text into hexadecimal
-        return passwd
+        key = rsa.PublicKey(rsaPublickey, 65537)
+        message = str(self.servertime) + '\t' + str(self.nonce) + '\n' + str(self.userpwd)
+        passwd = rsa.encrypt(message.encode("utf-8"), key)
+        # binascii module please download https://pypi.python.org/pypi/micropython-binascii/2.4.0-3 and install
+        passwd = binascii.b2a_hex(passwd)
+        return passwd.decode("utf-8")
 
     def _build_login_param(self):
         """
         构建login参数
         """
-        return dict(
-            encoding="utf-8",
-            entry="weibo",
-            # from=""
-            gateway="1",
-            nonce=self.nonce,
-            pagerefer="",
-            prelt="",
-            pwencode="rsa2",         # 密码加密算法
-            returntype="META",
-            rsakv=self.rsakv,
-            savestate="7",
-            servertime=self.servertime,
-            service="miniblog",
-            sp="",                    # 加密密码
-            sr="1280*800",
-            su=self.encodeusername,   # base64加密用户名
-            url=self._ajax_login_url(),
-            useticket="1",
-            vsnf="1"
-        )
+        self.prelogin_request()
+        return {
+            "encoding": "utf-8",
+            "entry": "weibo",
+            "from": "",
+            "gateway": "1",
+            "nonce": self.nonce,
+            "pagerefer": "http://login.sina.com.cn/sso/logout.php?entry=iniblog&r=ttp%3A%2F%2Fwe""ibo.com%2Flogout.php%3Fbackurl%3D%252F",
+            "prelt": "47",
+            "pwencode": "rsa2",         # 密码加密算法
+            "returntype": "META",
+            "rsakv": self.rsakv,
+            "savestate": "7",
+            "servertime": self.servertime,
+            "service": "miniblog",
+            "sp": self._get_pwd(),                    # 加密密码
+            "sr": "1280*800",
+            "su": self.encodeusername,   # base64加密用户名
+            "url": self._ajax_login_url(),
+            "useticket": "1",
+            "vsnf": "1",
+            "door": ""    # 验证码
+        }
 
     def _base64encode(self, orginstr, encoding="utf-8"):
         """
@@ -121,8 +135,9 @@ class WeiBoLogin(object):
 
 
 def main():
-    login = WeiBoLogin("18311441603", "xxx")
-    print(login.prelogin_request().__dict__)
+    login = WeiBoLogin("18311441603", "bailong")
+    # print(login.prelogin_request().__dict__)
+    print(login.login_request())
 
 
 if __name__ == '__main__':

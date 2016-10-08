@@ -23,6 +23,10 @@ http://pda.readthedocs.io/en/latest/chp5.html
 组间数据的操作（聚合，转换，功能应用
 
 
+cookbook
+https://github.com/jvns/pandas-cookbook
+
+
 """
 
 
