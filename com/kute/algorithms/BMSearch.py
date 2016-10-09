@@ -18,11 +18,9 @@ def search(pattern, text):
         return -1
     i = pl - 1
     j = i
-    print(i, j, pl, tl)
 
     while j < tl:
         while pattern[i] == text[j]:
-            print(i, j, pattern[i], text[j])
             if i == 0:
                 return j
             if j == tl - 1:
@@ -35,8 +33,6 @@ def search(pattern, text):
         else:
             j += pl - index - 1
         i = pl - 1
-        print(i, j, index)
-    print("no find")
     return -1
 
 
