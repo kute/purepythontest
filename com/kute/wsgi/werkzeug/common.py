@@ -9,6 +9,9 @@
 
 """
 
+import werkzeug
+from werkzeug.test import create_environ
+
 
 class CommonRequest(object):
     def __init__(self):
@@ -17,6 +20,7 @@ class CommonRequest(object):
 
 def main():
     print("hello")
+    environ = create_environ()
 
 
 if __name__ == "__main__":

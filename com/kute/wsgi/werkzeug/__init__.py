@@ -14,6 +14,8 @@ http://werkzeug.pocoo.org/
 
 http://werkzeug.pocoo.org/docs/0.11/
 
+http://werkzeug-docs-cn.readthedocs.io/zh_CN/latest/
+
 """
 
 

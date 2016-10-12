@@ -46,8 +46,15 @@ class Shortly(object):
         try:
             endpoint, values = adapter.match()
             return getattr(self, 'on_' + endpoint)(request, **values)
+        except NotFound as e:
+            return self.error_404(e)
         except HTTPException as e:
             return e
+
+    def error_404(self, error):
+        response = self.render_template('404.html', error=error)
+        response.status_code = 404
+        return response
 
     def wsgi_app(self, environ, start_response):
         request = Request(environ)
