@@ -3,6 +3,7 @@
 
 # __author__ = 'kute'
 # __mtime__ = '16/5/12 21:13'
+# see com.kute.text.encoding_detect.py
 
 import argparse
 
