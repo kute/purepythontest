@@ -59,6 +59,7 @@ class SSHConnector(object):
             easylog.error(e)
 
     def execute_command(self, command="ls -l", timeout=3000):
+        """execute command"""
         stdin, stdout, stderr = self.session.exec_command(command, timeout)
         if stderr:
             raise SSHException(stderr)

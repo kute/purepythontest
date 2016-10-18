@@ -3,12 +3,11 @@
 
 """
 @version: 1.0
-@ __author__: longbai 
+@ __author__: kute 
 @ __file__: __init__.py.py
-@ __mtime__: 2016/9/14 16:36
+@ __mtime__: 2016/10/18 22:51
 
-https://github.com/rossdylan/SuperParamiko
-http://www.paramiko.org/
+http://scrapy-chs.readthedocs.io/zh_CN/1.0/intro/tutorial.html
 
 """
 
