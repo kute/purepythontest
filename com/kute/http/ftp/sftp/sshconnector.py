@@ -11,6 +11,8 @@ http://www.paramiko.org/
 """
 
 import sys
+import socket
+import traceback
 import paramiko
 from paramiko import SSHException, AuthenticationException
 from kute.easylog.easylog import geteasylog
@@ -23,7 +25,8 @@ paramiko.util.log_to_file('paramiko.log')
 
 class SSHConnector(object):
 
-    def __init__(self, host=None, port=22, username=None, password=None, pub_key_file=None):
+    def __init__(self, host=None, port=22, username=None, password=None, pub_key_file=None,
+                 known_hosts_file_path=None):
         """
         :param pub_key_file windows平台需要转换为openssh形式的key,然后传的是私钥，还需要传password参数用于解密私钥；其他平台就
                 传publickey即可，不需要传password
@@ -35,9 +38,13 @@ class SSHConnector(object):
         self.username = username
         self.password = password
         self.pub_key_file = pub_key_file
+        self.knownhost = known_hosts_file_path
+        self.hostkeys = self._load_host_keys()
 
         self.sshclient = self._connect()
-        self.session = self.sshclient.get_transport().open_session()
+        if self.sshclient:
+            self.session = self.sshclient.get_transport().open_session()
+        self.sftpclient = self._init_sftp_client()
 
     def _connect(self):
         try:
@@ -54,19 +61,58 @@ class SSHConnector(object):
                 client.connect(hostname=self.host, port=self.port, username=self.username, password=self.password)
             return client
         except AuthenticationException as e:
-            print(e)
+            easylog.error(e)
         except SSHException as e:
             easylog.error(e)
 
+    def _load_host_keys(self):
+        host_keys = {}
+        if self.knownhost:
+            try:
+                host_keys = paramiko.util.load_host_keys(self.knownhost)
+            except IOError as e:
+                try:
+                    # try ~/ssh/ too, because windows can't have a folder named ~/.ssh/
+                    host_keys = paramiko.util.load_host_keys()
+                except IOError as e:
+                    easylog.error("Unable to open host keys file:{}".format(self.knownhost))
+        return host_keys
+
+    def _init_sftp_client(self):
+        if self.sshclient:
+            return self.sshclient.open_sftp()
+        if self.host in self.hostkeys:
+            hostkeytype = self.hostkeys[self.host].keys()[0]
+            hostkey = self.hostkeys[self.host][hostkeytype]
+            hostfqdn = socket.getfqdn(self.host)
+            easylog.info('Using host key of type %s' % hostkeytype)
+            try:
+                t = paramiko.Transport((self.host, self.port))
+                t.connect(hostkey=hostkey, username=self.username, password=self.password,
+                          gss_host=hostfqdn, gss_auth=True, gss_kex=True)
+                sftp = paramiko.SFTPClient.from_transport(t, max_packet_size=1000 * 1000 * 10)
+                return sftp
+            except SSHException as e:
+                traceback.print_exc()
+                t.close()
+                sys.exit(1)
+
     def execute_command(self, command="ls -l", timeout=3000):
-        """execute command"""
-        stdin, stdout, stderr = self.session.exec_command(command, timeout)
+        """execute command
+        :param command:
+        :param timeout:
+        """
+        print(self.session is None)
+        stdin, stdout, stderr = self.session.exec_command(command)
+        print(stdout)
+        print(stderr)
         if stderr:
             raise SSHException(stderr)
         self.sshclient.close()
         return stdout
 
     def _sftp_operation(self, remotefile=None, localfile=None, op=None):
+        """do some sftp operations like 'get', 'put', 'read', 'write' """
         if not remotefile or not localfile:
             raise ValueError("must special remote and dest file path")
         sftp = self.sshclient.open_sftp()
@@ -87,18 +133,7 @@ class SSHConnector(object):
 
 
 def main():
-    host = ""
-    password = ""
-    username = ""
-    port = 22
-    openssh_pri_key = "C:\\ssh_private_key"
-    pubkey = "C:\\my.pub"
-    connector = SSHConnector(host=host, port=port, username=username, password=password, pub_key_file=openssh_pri_key)
-    result = connector.execute_command("df -h")
-    for line in result:
-        print(line)
-    # connector.sftp_get("webshotmonitor.txt", "webshotmonitor-local.txt")
-    # connector.sftp_put(localfile="a.txt", remotefile="/aup.txt")
+    print("hehe")
 
 
 if __name__ == '__main__':
