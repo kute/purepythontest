@@ -94,3 +94,8 @@ com/kute/algorithms/test.py
 com/kute/search/Whoosh/quichstart/indexdir/MAIN_j2na3lgzc4hqz9ub.seg
 com/kute/search/Whoosh/quichstart/resources/
 /com/kute/search/Whoosh/quichstart/indexdir/*
+.DS_Store
+com/.DS_Store
+com/kute/.DS_Store
+com/kute/html/getverifycodefromweibo.py
+com/kute/imagery/.DS_Store

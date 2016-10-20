@@ -15,8 +15,13 @@ import socket
 import traceback
 import paramiko
 from paramiko import SSHException, AuthenticationException
+from gevent.pool import Pool
+from gevent import monkey
+from multiprocessing import cpu_count
 from kute.easylog.easylog import geteasylog
 
+
+monkey.patch_all()
 easylog = geteasylog()
 plat = sys.platform
 
@@ -131,6 +136,8 @@ class SSHConnector(object):
 
 class LogDownloader(object):
 
+    i = 1
+
     def __init__(self, username=None, password=None, serverfile=None, private_openssh_key_file=None, srcfile=None,
                  destfiledir=None):
         self.serverfile = serverfile
@@ -144,20 +151,26 @@ class LogDownloader(object):
         tempary = self.srcfile[self.srcfile.rfind("/") + 1:].split(".")
         return "".join([self.destfiledir, "\\\\", tempary[0], "-", str(i), ".", tempary[1]])
 
+    def _download(self, hostandport):
+        if hostandport:
+            serverary = hostandport.strip().split(":")
+            host = serverary[0]
+            port = serverary[1]
+            if host and port:
+                sshconnector = SSHConnector(host=host, port=int(port), username=self.username, password=self.password,
+                                            pub_key_file=self.pubkey)
+                destfile = self._generate_dest_file_path(LogDownloader.i)
+                print(destfile)
+                sshconnector.sftp_get(self.srcfile, destfile=destfile)
+                LogDownloader.i += 1
+
     def download(self):
         with open(self.serverfile, "r") as f:
-            i = 1
-            for line in f:
-                serverary = line.strip().split(":")
-                host = serverary[0]
-                port = serverary[1]
-                if host and port:
-                    sshconnector = SSHConnector(host=host, port=int(port), username=self.username, password=self.password,
-                                                pub_key_file=self.pubkey)
-                    destfile = self._generate_dest_file_path(i)
-                    print(destfile)
-                    sshconnector.sftp_get(self.srcfile, destfile=destfile)
-                    i += 1
+            cpunum = cpu_count()
+            print("current use {} cpu:".format(cpunum))
+            # 开启多线程(协程)
+            pool = Pool(cpunum)
+            pool.map(self._download, f.readlines())
 
 
 def main():
