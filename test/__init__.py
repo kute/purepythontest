@@ -1,16 +1,18 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# __author__ = 'kute'
-# __mtime__ = '16/5/17 21:42'
+"""
+@version: 1.0
+@ __author__: kute
+@ __file__: __init__.py.py
+@ __mtime__: 2016/10/20 17:52
 
-
-a = 1
+"""
 
 
 def main():
-    pass
+    print("hello")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

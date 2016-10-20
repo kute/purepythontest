@@ -24,7 +24,7 @@ def main():
     # result = connector.execute_command(command="ls")
     # for line in result:
     #     print(line)
-    connector.sftp_get("/home/gentie/gentie/online_consumer/tomcat-News_web-Ins1/statistics/add_tie.log", "haha2.txt")
+    connector.sftp_get("/home/gentie/gentie/online_consumer/tomcat-News_web-Ins1/statistics/add_tie.log", "haha3.txt")
     # connector.sftp_put(localfile="a.txt", remotefile="/aup.txt")
     print(sys.path)
 
