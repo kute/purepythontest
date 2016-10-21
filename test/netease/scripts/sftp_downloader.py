@@ -25,7 +25,7 @@ monkey.patch_all()
 easylog = geteasylog()
 plat = sys.platform
 
-paramiko.util.log_to_file('paramiko.log')
+# paramiko.util.log_to_file('paramiko.log')
 
 
 class SSHConnector(object):
@@ -160,7 +160,9 @@ class LogDownloader(object):
                 sshconnector = SSHConnector(host=host, port=int(port), username=self.username, password=self.password,
                                             pub_key_file=self.pubkey)
                 destfile = self._generate_dest_file_path(LogDownloader.i)
-                print(destfile)
+                print("=================================================")
+                print(host, self.srcfile, destfile)
+                print("=================================================")
                 sshconnector.sftp_get(self.srcfile, destfile=destfile)
                 LogDownloader.i += 1
 
@@ -169,8 +171,10 @@ class LogDownloader(object):
             cpunum = cpu_count()
             print("current use {} cpu:".format(cpunum))
             # 开启多线程(协程)
-            pool = Pool(cpunum)
-            pool.map(self._download, f.readlines())
+            # pool = Pool(cpunum)
+            # pool.map(self._download, f.readlines())
+            for line in f:
+                self._download(line)
 
 
 def main():
@@ -207,13 +211,13 @@ def main():
         print("Error, must special the params using -u and -p and -srcf and -dd.")
         return
     if args.vote:
-        srcfile = "the path-prefix/{}".format(args.srcfile)
+        easylog.info("======download vote file:{}".format(args.srcfile))
     elif args.tie:
-        srcfile = "the path-prefix/{}".format(args.srcfile)
+        easylog.info("======download tie file:{}".format(args.srcfile))
     elif args.follow:
-        srcfile = "the path-prefix/{}".format(args.srcfile)
+        easylog.info("======download follow file:{}".format(args.srcfile))
     downloader = LogDownloader(username=args.username, password=args.password, serverfile=args.serverfile,
-                               private_openssh_key_file=args.pkey, srcfile=srcfile, destfiledir=args.destdir)
+                               private_openssh_key_file=args.pkey, srcfile=args.srcfile, destfiledir=args.destdir)
     downloader.download()
     print("Done !")
 
