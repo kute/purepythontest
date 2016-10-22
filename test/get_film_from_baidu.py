@@ -18,10 +18,11 @@ import dominate
 from dominate.tags import meta, div, table, tr, td, a
 import webbrowser
 
+
 class GetFilm(object):
 
     def __init__(self, page=1, keyword="2016"):
-        self.page = page
+        self.page = page or 1
         self.keyword = keyword
 
         self.baiduurl = "http://www.baiduyun.me/forum.php?mod=forumdisplay&fid=99&page={}"
@@ -37,6 +38,8 @@ class GetFilm(object):
             parse2 = BeautifulSoup(str(tbody.tr.th), "html.parser")
             a = parse2.select_one("a[class='s xst']")
             if self.keyword and a.string.find(self.keyword) != -1:
+                filmlist.append((a["href"], a.string))
+            else:
                 filmlist.append((a["href"], a.string))
         print("========2. Finish scrapy the page and begin generate the html:{}.========".format(self.baidufile))
         self.generate_html(filmlist)
