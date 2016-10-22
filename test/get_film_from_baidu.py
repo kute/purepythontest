@@ -37,8 +37,9 @@ class GetFilm(object):
         for tbody in tbodylist:
             parse2 = BeautifulSoup(str(tbody.tr.th), "html.parser")
             a = parse2.select_one("a[class='s xst']")
-            if self.keyword and a.string.find(self.keyword) != -1:
-                filmlist.append((a["href"], a.string))
+            if self.keyword:
+                if a.string.find(self.keyword) != -1:
+                    filmlist.append((a["href"], a.string))
             else:
                 filmlist.append((a["href"], a.string))
         print("========2. Finish scrapy the page and begin generate the html:{}.========".format(self.baidufile))
