@@ -7,6 +7,8 @@
 @ __file__: __init__.py.py
 @ __mtime__: 2016/9/29 13:18
 
+生成测试数据
+
 https://github.com/joke2k/faker
 
 """
