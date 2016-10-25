@@ -7,6 +7,10 @@
 @ __file__: sftp_downloader.py
 @ __mtime__: 2016/10/19 17:12
 
+ssh 公私钥密码认证，sftp下载
+
+http://blog.csdn.net/kutejava/article/details/52880573
+
 """
 
 import argparse
