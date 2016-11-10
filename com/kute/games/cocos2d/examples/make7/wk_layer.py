@@ -28,8 +28,13 @@ class BackgroundLayer(ColorLayer):
         self.toolpanel = self.__init_tool_panel()
 
         sprite = Sprite("resources/hex.png")
-        print(self.playpanel.height / 2)
         sprite.position = (self.playpanel.width / 2, self.playpanel.height / 2)
+        # (x + r /2, y + r - r / sqrt(3))
+        # (x + r, y )
+        # (x + r /2, y - r + r / sqrt(3))
+        # (x - r /2, y - r + r / sqrt(3))
+        # (x - r, y )
+        # (x - r /2, y + r - r / sqrt(3))
         # sprite.position = (self.width / 2, playpanel.position[1])
         self.playpanel.add(sprite, z=1)
 
