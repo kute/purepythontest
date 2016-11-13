@@ -87,20 +87,25 @@ class PlayPanelLayer(ColorLayer):
         :param level:
         :param center_sprite:
         """
-        if not center_sprite:
-            return
-        x, y = center_sprite.position
-        w = center_sprite.width
-        h = center_sprite.height
-        temp = sqrt(3) * w / 6
-        extra = 4
-        self.six_hexagon_position = self.__get_six_hexagon_position(x, y, w, h, temp, extra)
-        for position in self.six_hexagon_position:
-            print(position)
+        positionlist = self.get_six_hexagon_position(center_sprite)
+        print(center_sprite.position)
+        print(positionlist)
+        for position in positionlist:
             sprite = WkSprite(position=position)
             PointHexagonStorage.add(position, sprite)
             self.add(sprite, z=1)
+        print(self.get_six_hexagon_position(PointHexagonStorage.get(positionlist[0])))
         print(PointHexagonStorage.hexagonmap)
+
+    def get_six_hexagon_position(self, centersprite=None):
+        if not centersprite:
+            raise ValueError("centersprite illegal")
+        x, y = centersprite.position
+        w = centersprite.width
+        h = centersprite.height
+        temp = sqrt(3) * w / 6
+        extra = 4
+        return self.__get_six_hexagon_position(x, y, w, h, temp, extra)
 
     def __get_six_hexagon_position(self, x, y, w, h, temp, extra=4):
         """the position of six hexagon around the center-hexagon(x, y) is below:

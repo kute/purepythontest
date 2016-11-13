@@ -8,8 +8,6 @@
 
 """
 
-from cocos.sprite import Sprite
-
 
 class PointHexagonStorage(object):
 
@@ -48,6 +46,13 @@ class PointHexagonStorage(object):
     def isexist(position=None):
         key = PointHexagonStorage.__key(position)
         return key in PointHexagonStorage.hexagonmap
+
+    @staticmethod
+    def get(position=None):
+        key = PointHexagonStorage.__key(position)
+        if key in PointHexagonStorage.hexagonmap:
+            return PointHexagonStorage.hexagonmap[key]
+        return None
 
 
 def main():
