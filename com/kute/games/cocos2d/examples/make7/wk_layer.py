@@ -9,10 +9,13 @@
 """
 
 import cocos
-from com.kute.games.cocos2d.examples.make7.constant import constants
+from com.kute.games.cocos2d.examples.make7.constant import *
+from com.kute.games.cocos2d.examples.make7.storage import PointHexagonStorage
 from cocos.layer import ColorLayer, MultiplexLayer
 from cocos.tiles import HexMapLayer
 from cocos.sprite import Sprite
+
+from math import sqrt
 
 
 class BackgroundLayer(ColorLayer):
@@ -26,17 +29,6 @@ class BackgroundLayer(ColorLayer):
         self.playpanel = self.__init_play_panel()
         self.switchpanel = self.__init_switch_panel()
         self.toolpanel = self.__init_tool_panel()
-
-        sprite = Sprite("resources/hex.png")
-        sprite.position = (self.playpanel.width / 2, self.playpanel.height / 2)
-        # (x + r /2, y + r - r / sqrt(3))
-        # (x + r, y )
-        # (x + r /2, y - r + r / sqrt(3))
-        # (x - r /2, y - r + r / sqrt(3))
-        # (x - r, y )
-        # (x - r /2, y + r - r / sqrt(3))
-        # sprite.position = (self.width / 2, playpanel.position[1])
-        self.playpanel.add(sprite, z=1)
 
         self.add(self.toppanel, z=1)
         self.add(self.playpanel, z=1)
@@ -83,12 +75,50 @@ class TopPanelLayer(ColorLayer):
 
 class PlayPanelLayer(ColorLayer):
     def __init__(self, height=360, width=constants["container"]["width"]):
-        super(PlayPanelLayer, self).__init__(r=0, g=255, b=255, a=255, width=width, height=height)
+        super(PlayPanelLayer, self).__init__(r=25, g=29, b=45, a=255, width=width, height=height)
 
-        self.create()
+        centersprite = WkSprite(position=(self.width / 2, self.height / 2))
+        self.add(centersprite)
+        self.six_hexagon_position = list()
+        self.create_hexagon(center_sprite=centersprite, level=2)
 
-    def create(self):
-        print()
+    def create_hexagon(self, center_sprite=None, level=2):
+        """create six hexagon around the center-hexagon
+        :param level:
+        :param center_sprite:
+        """
+        if not center_sprite:
+            return
+        x, y = center_sprite.position
+        w = center_sprite.width
+        h = center_sprite.height
+        temp = sqrt(3) * w / 6
+        extra = 4
+        self.six_hexagon_position = self.__get_six_hexagon_position(x, y, w, h, temp, extra)
+        for position in self.six_hexagon_position:
+            print(position)
+            sprite = WkSprite(position=position)
+            PointHexagonStorage.add(position, sprite)
+            self.add(sprite, z=1)
+        print(PointHexagonStorage.hexagonmap)
+
+    def __get_six_hexagon_position(self, x, y, w, h, temp, extra=4):
+        """the position of six hexagon around the center-hexagon(x, y) is below:
+        (x + w / 2, y + h - sqrt(3) * w / 6)
+        (x + w, y)
+        (x + w / 2, y - h + sqrt(3) * w / 6)
+        (x - w / 2, y - h + sqrt(3) * w / 6)
+        (x - w, y )
+        (x - w / 2, y + h - sqrt(3) * w / 6)
+        """
+        return [
+            (x + w / 2 + extra, y + h - temp + extra),
+            (x + w + extra, y),
+            (x + w / 2 + extra, y - h + temp - extra),
+            (x - w / 2, y - h + temp - extra),
+            (x - w - extra, y),
+            (x - w / 2, y + h - temp + extra)
+        ]
 
 
 class SwitchPanelLayer(ColorLayer):
@@ -100,6 +130,11 @@ class ToolPanelLayer(ColorLayer):
     def __init__(self, height=80, width=constants["container"]["width"]):
         super(ToolPanelLayer, self).__init__(r=255, g=255, b=0, a=255, width=width, height=height)
 
+
+class WkSprite(Sprite):
+
+    def __init__(self, position=None):
+        super(WkSprite, self).__init__(sprite_image, position)
 
 
 def main():

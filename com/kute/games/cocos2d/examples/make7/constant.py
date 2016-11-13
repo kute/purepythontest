@@ -9,14 +9,6 @@
 
 """
 
-class Constant(object):
-    container_width = 480
-    container_height = 640
-
-    top_panel_height = 80
-    play_panel_height = 360
-    switch_panel_height = 120
-    tool_panel_height = 80
 
 constants = {
     "container": {
@@ -36,6 +28,8 @@ constants = {
         "height": 80
     }
 }
+
+sprite_image = "resources/hexagon3.jpg"
 
 
 def main():
