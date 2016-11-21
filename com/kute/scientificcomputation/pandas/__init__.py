@@ -6,6 +6,7 @@
 
 """
 http://pandas.pydata.org/
+http://pandas.pydata.org/pandas-docs/stable/
 
 http://pda.readthedocs.io/en/latest/chp5.html
 
