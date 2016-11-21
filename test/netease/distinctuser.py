@@ -28,6 +28,7 @@ delary = ["yeah", "126", "163"]
 # ['aa', 'ab', ..., 'be']
 del163ary = [('a' if i <= ord('z') else 'b') +
              chr(i if i <= ord('z') else i - ord('z') + ord('a') - 1) for i in range(ord('a'), ord('z') + 6)]
+del163file = "/Users/kute/work/docs/netease/data/del20161008/163_del20161008{}"
 
 chunksize = 1000000
 
@@ -53,7 +54,7 @@ def filteremail():
                 # TODO deleted
         else:
             for del163sub in del163ary:
-                del163df = pd.read_csv(delfile.format(del163sub), header=None, sep=",")
+                del163df = pd.read_csv(del163file.format(del163sub), header=None, sep=",")
                 for resultsub2 in userinfoary:
                     resultdf2 = pd.read_csv(resultfilestr.format(resultsub2), header=None, sep=",")
                     validdf2 = pd.merge(pd.DataFrame({akey: del163df[0]}), pd.DataFrame({akey: resultdf2[1]}),
