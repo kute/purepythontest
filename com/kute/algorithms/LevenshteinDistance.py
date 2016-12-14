@@ -22,7 +22,7 @@ def main():
                 martix[j][i] = min(martix[j][i-1] + 1, martix[j-1][i] + 1, martix[j-1][i-1])
             else:
                 martix[j][i] = min(martix[j][i-1] + 1, martix[j-1][i] + 1, martix[j-1][i-1] + 1)
-    print martix[m][n]
+    print(martix[m][n])
 
 
 if __name__ == '__main__':
