@@ -46,7 +46,9 @@ def main():
     frame.year
     frame.year.c
     frame.ix['c']  # 行 访问
-    frame.columns
+    frame.rename(columns={'year': 'yearP', 'pop': 'popP'}, inplace=True)  # 重命名列名
+    frame.rename(columns=lambda cl: cl + "P", inplace=True)  # 重命名列名
+    print(frame.columns)
     frame['notkey'] = 3  # frame.notkey = 3
     frame.notkey = np.arange(1, 6)
 

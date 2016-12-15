@@ -10,14 +10,19 @@
 """
 
 import numpy as np
-
+import re
 
 def main():
     try:
-        with open("data.txt", "r") as fp:
-            arry = np.loadtxt(fname=fp, delimiter=", ", dtype="<U1")
+        with open("load.txt", "r") as fp:
+            arry = np.loadtxt(fname=fp, delimiter="\s+", dtype=str)
             print(arry.ndim)
             print(arry.shape)
+            print(arry)
+            b = "asdf"
+            print(b)
+            a = "b'10/31/2016'"
+            print(re.sub("b|'", '', a))
     except Exception as e:
         print(e)
 

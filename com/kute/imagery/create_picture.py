@@ -15,14 +15,17 @@ import random
 
 
 def main():
-    text = ["中", "国", "制", "造"]
-    oimg = Image.open("noface80_80.png")
-    newimage = Image.new("RGB", oimg.size, random.randint(0, 255))
-    size = newimage.size
-    font = ImageFont.truetype('simhei.ttf', 45)
-    draw = ImageDraw.Draw(newimage)
-    draw.text((size[0] * 0.2, size[1] * 0.2), str(text[random.randint(0, len(text) - 1)], "utf-8"), font=font)
-    newimage.save("b.png")
+    # text = ["中", "国", "制", "造"]
+    # oimg = Image.open("verificationcode/letters.bmp")
+    # newimage = Image.new("RGB", oimg.size, random.randint(0, 255))
+    # size = newimage.size
+    # font = ImageFont.truetype('simhei.ttf', 45)
+    # draw = ImageDraw.Draw(newimage)
+    # draw.text((size[0] * 0.2, size[1] * 0.2), str(text[random.randint(0, len(text) - 1)], "utf-8"), font=font)
+    # newimage.save("b.png")
+
+    ni = Image.new("RGB", (100, 10), 255)
+    ni.save("f.png")
 
 
 if __name__ == "__main__":

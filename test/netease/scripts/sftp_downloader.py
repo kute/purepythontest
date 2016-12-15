@@ -151,9 +151,9 @@ class LogDownloader(object):
         self.srcfile = srcfile
         self.destfiledir = destfiledir
 
-    def _generate_dest_file_path(self, i):
+    def _generate_dest_file_path(self, host):
         tempary = self.srcfile[self.srcfile.rfind("/") + 1:].split(".")
-        return "".join([self.destfiledir, "\\\\", tempary[0], "-", str(i), ".", tempary[1]])
+        return "".join([self.destfiledir, "\\\\", tempary[0], "-", str(host), ".", tempary[1]])
 
     def _download(self, hostandport):
         if hostandport:
@@ -163,7 +163,7 @@ class LogDownloader(object):
             if host and port:
                 sshconnector = SSHConnector(host=host, port=int(port), username=self.username, password=self.password,
                                             pub_key_file=self.pubkey)
-                destfile = self._generate_dest_file_path(LogDownloader.i)
+                destfile = self._generate_dest_file_path(host)
                 print("=================================================")
                 print(host, self.srcfile, destfile)
                 print("=================================================")
@@ -189,6 +189,7 @@ def main():
                         help="for vote log.",
                         action="store_true")
     parser.add_argument("--tie", help="for comment log.", action="store_true")
+    parser.add_argument("--web", help="for web log.", action="store_true")
     parser.add_argument("--follow",
                         help="for follow log .",
                         action="store_true")
@@ -220,6 +221,9 @@ def main():
         easylog.info("======download tie file:{}".format(args.srcfile))
     elif args.follow:
         easylog.info("======download follow file:{}".format(args.srcfile))
+    elif args.web:
+        easylog.info("======download web file:{}".format(args.srcfile))
+
     downloader = LogDownloader(username=args.username, password=args.password, serverfile=args.serverfile,
                                private_openssh_key_file=args.pkey, srcfile=args.srcfile, destfiledir=args.destdir)
     downloader.download()

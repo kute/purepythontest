@@ -12,12 +12,22 @@
 import requests
 from gevent.pool import Pool
 from gevent import monkey
+import json
+from logbook import Logger, FileHandler, INFO, Processor
 
 monkey.patch_all()
+
+formatstr = "{record.time}:{record.message}"
+handler = FileHandler(filename="test.log", mode="a", encoding="utf-8", level=INFO, format_string=formatstr)\
+    .push_application()
+mylog = Logger("processor")
 
 
 url = "http://10.164.96.127:8282/api/v1/products/a2869674571f77b5a0867c3d71db5856/" \
       "follow/user/{}/action/{}/followmove".format("urstestqy2@163.com", "follow")
+
+
+threadurl = "http://comment.news.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/{}"
 
 
 def dopost(passport):
@@ -31,8 +41,22 @@ def dopost(passport):
         print(e, passport)
 
 
+def doget(docId):
+    try:
+        response = requests.get(threadurl.format(docId))
+        if response and response.status_code == 200:
+            threadobj = json.loads(response.text)
+            if threadobj and "tcount" in threadobj:
+                tcount = threadobj["tcount"]
+                if tcount > 0:
+                    mylog.info("{},{}".format(docId, tcount))
+    except Exception as e:
+        print(e)
+
+
 def main():
-    filename = "userpassport.txt"
+    filename = "docidlist.txt"
+    total = 0
     with open(filename) as f:
         pool = Pool(20)
         plist = []
@@ -40,7 +64,13 @@ def main():
             plist.append(passport.strip())
             if len(plist) >= 100:
                 # pool.map(dopost, plist)
+                total += 100
+                print("deal {}".format(total))
+                pool.map(doget, plist)
                 plist.clear()
+        if len(plist) > 0:
+            pool.map(doget, plist)
+            plist.clear()
 
 
 if __name__ == "__main__":
