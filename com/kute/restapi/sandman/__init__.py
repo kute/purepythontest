@@ -8,6 +8,9 @@
 
 从已存在的数据源自动创建 rest api
 
+https://github.com/jeffknupp/sandman2
+http://sandman2.readthedocs.io/en/latest/
+
 """
 
 
