@@ -10,6 +10,7 @@
 
 https://github.com/jeffknupp/sandman2
 http://sandman2.readthedocs.io/en/latest/
+http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
 
 """
 
