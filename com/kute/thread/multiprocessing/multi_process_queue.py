@@ -27,7 +27,7 @@ def getdata(myqueue):
     # data = myqueue.get(False)
     data = myqueue.get_nowait()  # 相当于  get(False)
     print("getdata from queue:data={}, processid={}".format(data, multiprocessing.current_process().name))
-    return data
+    return data + 1
 
 
 # 每个进程处理完结果返回进行回调
