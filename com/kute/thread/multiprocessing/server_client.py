@@ -9,7 +9,8 @@
 """
 
 
-import time, random
+import time
+import os
 from multiprocessing import Process, Pipe, current_process
 from multiprocessing.connection import wait, Listener, Client
 
@@ -56,7 +57,7 @@ def start_client(address, authkey):
 
 def server_client_listen():
     address = ('127.0.0.1', 14236)
-    authkey = b'password'
+    authkey = os.urandom(10)
 
     print('server begin start')
     serverp = Process(target=start_server, args=(address, authkey))
