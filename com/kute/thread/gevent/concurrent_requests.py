@@ -20,6 +20,7 @@ from gevent.pool import Pool
 import requests
 import threading
 import multiprocessing
+import time
 
 monkey.patch_all()
 
@@ -35,13 +36,14 @@ def main():
     print("end ............................................map")
     result = pool.map_async(get, urls)  # 非阻塞，方法立即返回，但是只有在调用 get 才会返回结果
     print("end.............................................map_async")
-    result.get()
     pool.join()
+    result.get()
     print("end..............................................")
 
 
 def get(url):
     print("{}=={}=={}".format(url, requests.get(url).status_code, multiprocessing.current_process().name))
+    time.sleep(1)
     return url
 
 

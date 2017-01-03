@@ -8,20 +8,25 @@ import gevent
 import random
 from gevent import socket
 import time
+import gevent
 
 
-def printnow(n):
-    time.sleep(random.randint(2, 3))
-    print(n)
-    return n
+def task1():
+    print('task1 begin')
+    gevent.sleep(4)
+    print('task1 end')
+
+
+def task2():
+    print('task2 begin')
+    gevent.sleep(2)
+    print('task2 end')
 
 
 def main():
-    urls = ['www.google.com', 'www.example.com', 'www.python.org']
-    # jobs = [gevent.spawn(socket.gethostbyname, url) for url in urls]
-    jobs = [gevent.spawn(printnow, n) for n in range(10)]
-    gevent.joinall(jobs, timeout=10)
-    print ([job.value for job in jobs])
+    tasks = [gevent.spawn(task1), gevent.spawn(task2)]
+    results = gevent.joinall(tasks)
+    print(results)
 
 
 if __name__ == '__main__':
