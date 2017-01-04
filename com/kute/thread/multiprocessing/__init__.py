@@ -7,6 +7,8 @@
 @ __file__: __init__.py.py
 @ __mtime__: 2016/7/30 10:44
 
+https://docs.python.org/3.5/library/multiprocessing.html
+
 """
 
 

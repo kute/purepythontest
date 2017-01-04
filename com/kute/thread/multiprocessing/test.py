@@ -14,7 +14,13 @@ multiprocessing.Process 类似于 threading.Thread
 
 https://docs.python.org/dev/library/multiprocessing.html
 
+1. 进程的启动方式有三种：(multiprocessing.set_start_method())
+  spawn: 子进程只会继承运行时必要的资源，非必要的不会继承，相对于其他启动方式 较慢。
+  fork : 子进程会全部继承父进程的所有资源
+  forkserver: 启动时，父进程 连接到 server 然后请求创建一个新的进程（新进程是单线程的，所以线程安全）
+
 """
+import multiprocessing
 from multiprocessing import Process, Pool
 import gevent
 from kute.caltime import caltime
@@ -27,6 +33,7 @@ def f(num):
 
 @caltime.process_time
 def map(pool):
+    multiprocessing.get_context().set_start_method("fork")
     return pool.map(f, range(100000), 5)
 
 
