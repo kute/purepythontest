@@ -54,6 +54,23 @@ def main():
 
     frame['new'] = np.arange(2, 7)  # 添加新 列
 
+    # create dataframe
+    a = {'a': 1, 'b': 2}
+    b = pd.Series([1, 2, 3], index=list('abc'))
+    c = pd.Series([1, 2, 3])
+    d = {'cc': a, 'dd': a}
+    e = {'ee': b}
+    f = {'ff': b, 'fff': b}
+    g = {'gg': a, 'ggg': b}
+    frame = DataFrame(a, index=['A', 'B', 'C'])  # 列名为 字典key，且值 为字典value的指定索引（索引个数代表行数）的dataframe
+    frame = DataFrame(b)  # 列名 从 0开始, 索引为 series的索引
+    frame = DataFrame(c)  # 列明 从 0开始，索引也 从 0开始
+    frame = DataFrame(d)  # 列明指定为 cc和 dd， 索引为 字典key
+    frame = DataFrame(e)  # 列名 为 ee， 索引为series索引
+    frame = DataFrame(f)  # 列名 为 ff和fff， 索引为series索引
+    frame = DataFrame(g)
+
+
 
 if __name__ == '__main__':
     main()

@@ -26,10 +26,14 @@ def main():
     easylog.info(ary2.shape)   # shape 几维数组
     easylog.info(ary2.dtype)   # 数据类型
 
-    easylog.info(np.zeros((3, 5)))
+    easylog.info(np.zeros((3, 5)))  # 填充 0
     easylog.info(np.zeros_like(ary2))
 
-    easylog.info(np.ones((3, 5)))
+    easylog.info(np.ones(5))
+    easylog.info(np.ones((3, 5)))  # 填充1
+
+    n = 4
+    easylog.info(np.full((3, 5), n, np.int))  # 填充 n
 
     easylog.info(np.empty((3, 5)))  # random
     easylog.info(np.random.random((3, 5)))
