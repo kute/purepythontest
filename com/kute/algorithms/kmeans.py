@@ -13,7 +13,7 @@ http://www.cnblogs.com/leoo2sk/archive/2010/09/20/k-means.html
 
 """
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from math import sqrt
 
 
@@ -23,12 +23,13 @@ class KMeans(object):
         self.datamap = datamap
         self.seedlist = seedlist
 
-        self.puredatamap = {name: location for name, location in self.datamap.items() if location not in self.seedlist}
         self.datalist = list(datamap.values())
-        self.puredatalist = list(filter(lambda x: x not in self.seedlist, self.datalist))
-        self.seedmap = {i: location for i, location in enumerate(self.seedlist)}
+        self.seedmap = self._return_seed_map()
 
         self.resultmap = defaultdict(list)
+
+    def _return_seed_map(self):
+        return OrderedDict({i: location for i, location in enumerate(self.seedlist)})
 
     def euclidean_distance(self, location_x, location_y):
         """欧氏距离
@@ -55,24 +56,39 @@ class KMeans(object):
     def _determining_seed(self):
         """选取新的种子点（点左边取均值）
         """
-        pass
+        if len(self.resultmap) > 0:
+            self.seedlist.clear()
+            for index, countrylist in self.resultmap.items():
+                self.seedlist.append(self._cal_location(countrylist))
+            self.seedmap = self._return_seed_map()
+            # print(self.seedmap)
+
+    def _cal_location(self, datalist):
+        datasize = len(datalist)
+        size = len(self.datamap[datalist[0]])
+        locationlist = []
+        for i in range(size):
+            total = sum([self.datamap[name][i] for name in datalist])
+            locationlist.append(round(total / datasize, 4))
+        return tuple(locationlist)
 
     def start(self):
         tempresult = defaultdict(list)
-        for countryname, location in self.puredatamap.items():
+        for countryname, location in self.datamap.items():
             temp = {}
-            for nth, seedloc in self.seedmap.items():
-                temp[nth] = self.euclidean_distance(location, seedloc)
+            for index, seedloc in self.seedmap.items():
+                temp[index] = self.euclidean_distance(location, seedloc)
+                # print(index, seedloc)
             key = min(temp, key=temp.get)
+            # print(countryname, location, key, temp)
             tempresult[key].append(countryname)
-            if tempresult[key] in self.datalist:
-                name = list(self.datamap.keys())[self.datalist.index(tempresult[key])]
-                print(name)
 
-        self.resultmap = tempresult.copy()
-        # if not self._is_closure(tempresult):
-        #     self._determining_seed()
-            # self.start()
+        # self.resultmap = tempresult.copy()
+        print(self.seedmap, tempresult, self.resultmap)
+        if not self._is_closure(tempresult):
+            self.resultmap = tempresult.copy()
+            self._determining_seed()
+            self.start()
 
 
 def main():
@@ -99,9 +115,6 @@ def main():
     kmeans = KMeans(3, datamap, seedlist)
     kmeans.start()
     print(kmeans.resultmap)
-    resultmap = defaultdict(list)
-    print(len(resultmap))
-
 
 if __name__ == "__main__":
     main()
