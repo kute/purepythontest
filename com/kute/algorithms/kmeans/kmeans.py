@@ -67,28 +67,29 @@ class Kmeans(object):
         """
         if len(self.resultmap) == 0:
             return False
-        for key, countrys in self.resultmap.items():
-                if len(set(countrys) - set(taskresultmap[key])) > 0:
+        for key, dotlist in self.resultmap.items():
+            tdotlist = taskresultmap[key]
+            dotarray = np.array(dotlist)
+            tdotarray = np.array(tdotlist)
+            dotarray.sort(axis=0)
+            tdotarray.sort(axis=0)
+            for index, subarray in enumerate(dotarray):
+                if len(set(list(subarray)) - set(list(tdotarray[index]))) > 0:
                     return False
         return True
 
-    def _cal_location(self, datalist):
-        datasize = len(datalist)
-        size = len(self.datamap[datalist[0]])
-        locationlist = []
-        for i in range(size):
-            total = sum([self.datamap[name][i] for name in datalist])
-            locationlist.append(round(total / datasize, 4))
-        return tuple(locationlist)
-
     def _determining_seed(self):
-        """选取新的种子点（点左边取均值）
+        """选取新的种子点（点坐标取均值）
         """
         if len(self.resultmap) > 0:
-            self.seedlist.clear()
-            for index, countrylist in self.resultmap.items():
-                self.seedlist.append(self._cal_location(countrylist))
-            self.seedmap = self._return_seed_map()
+            newseedarray = []
+            nresultarray = np.array(list(self.resultmap.values()))
+            for subarray in nresultarray:
+                dotarray = np.array(subarray)
+                subnums = len(dotarray)
+                x, y = [round(sum(dotarray[:, 0]) / subnums, 6), round(sum(dotarray[:, 1]) / subnums, 6)]
+                newseedarray.append([x, y])
+            self.seedlocarray = np.array(newseedarray)
             return True
         return False
 
@@ -100,11 +101,14 @@ class Kmeans(object):
                 distancemap[index] = self._euclidean_distance(location, seedloc)
             key_min_distance = min(distancemap, key=distancemap.get)
             taskresultmap[key_min_distance].append(location)
-        print(taskresultmap)
-        # if not self._is_closure(taskresultmap):
-        #     self.resultmap = taskresultmap.copy()
-        #     if self._determining_seed():
-        #         self._start()
+        # print(self.seedlocarray, end="\n\n")
+        # print(taskresultmap)
+        # self.resultmap = taskresultmap.copy()
+        # self._determining_seed()
+        if not self._is_closure(taskresultmap):
+            self.resultmap = taskresultmap.copy()
+            if self._determining_seed():
+                self._start()
 
     @property
     def result(self):
@@ -114,7 +118,18 @@ class Kmeans(object):
 def main():
     filepath = "two_dimension_location.txt"
     kmeans = Kmeans(3, filepath, None)
-    print(kmeans.result)
+    # print(kmeans.result)
+
+    a = np.array([[1, 2], [3, 4]])
+    b = np.array([[4, 3], [2, 1]])
+    print(list(a), list(b))
+    # a.sort(axis=0)
+    # b.sort(axis=0)
+    # for index, subarray in enumerate(a):
+    #     print(set(subarray) - set(b[index]))
+    # print(a)
+    # print(b)
+    # print(a == b)
 
 
 if __name__ == "__main__":
