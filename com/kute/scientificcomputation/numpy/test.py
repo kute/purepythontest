@@ -19,12 +19,16 @@ def main():
     data1 = [1, 9.3, 23, 3, 23.13]
     ary1 = np.array(data1)
     easylog.info(ary1.shape)
+    # 打乱
+    np.random.shuffle(ary1)
+    easylog.info(ary1)
 
-    data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
+    data2 = [[1, 2, 3, 4], [5, 6, 7, 8], [2, 3, 4, 1]]
     ary2 = np.array(data2)
     easylog.info(ary2.ndim)
     easylog.info(ary2.shape)   # shape 几维数组
     easylog.info(ary2.dtype)   # 数据类型
+    easylog.info(ary2[[0, 2]])  # 取出指定 index 的元素
 
     easylog.info(np.zeros((3, 5)))  # 填充 0
     easylog.info(np.zeros_like(ary2))
@@ -84,6 +88,9 @@ def main():
     np.arange(24).shape = 2, -1, 4  # 这里的-1表示省略一个 维度声明, 是可以被推导出来的
 
     a = np.mat("1, 2; 4, 3")
+
+    # 从指定序列里随机选取n个元素，不重复，还可以指定元素出现的概率
+    print(np.random.choice([1, 2, 3, 8], size=2, replace=False))
 
 
 if __name__ == '__main__':
