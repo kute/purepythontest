@@ -7,10 +7,16 @@
 @ __file__: kmeans.py
 @ __mtime__: 2017/2/20 14:41
 
+k-means 初试验
+
 http://www.csdn.net/article/2012-07-03/2807073-k-means
 
 数据摘自下文的规格化后的数据
 http://www.cnblogs.com/leoo2sk/archive/2010/09/20/k-means.html
+
+缺点：
+1. k值 选取不确定（见kmeans-isodata.py）
+2. 种子点的选取对结果影响较大
 
 """
 
