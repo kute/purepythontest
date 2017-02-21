@@ -8,8 +8,9 @@
 @ __mtime__: 2017/2/20 14:41
 
 http://www.csdn.net/article/2012-07-03/2807073-k-means
-http://www.cnblogs.com/leoo2sk/archive/2010/09/20/k-means.html
 
+数据摘自下文的规格化后的数据
+http://www.cnblogs.com/leoo2sk/archive/2010/09/20/k-means.html
 
 """
 
@@ -18,9 +19,10 @@ from math import sqrt
 
 
 class KMeans(object):
-    def __init__(self, k, datamap, seedlist):
+    def __init__(self, k, datamap, seedname, seedlist):
         self.k = k
         self.datamap = datamap
+        self.seedname = seedname
         self.seedlist = seedlist
 
         self.datalist = list(datamap.values())
@@ -28,8 +30,11 @@ class KMeans(object):
 
         self.resultmap = defaultdict(list)
 
+        self.retry = 0
+        self.maxretry = 100
+
     def _return_seed_map(self):
-        return OrderedDict({i: location for i, location in enumerate(self.seedlist)})
+        return OrderedDict(zip(self.seedname, self.seedlist))
 
     def euclidean_distance(self, location_x, location_y):
         """欧氏距离
@@ -73,6 +78,8 @@ class KMeans(object):
         return tuple(locationlist)
 
     def start(self):
+        self.retry += 1
+        print("========this is {} begin and result=======".format(self.retry))
         tempresult = defaultdict(list)
         for countryname, location in self.datamap.items():
             temp = {}
@@ -82,10 +89,9 @@ class KMeans(object):
             key = min(temp, key=temp.get)
             # print(countryname, location, key, temp)
             tempresult[key].append(countryname)
-
-        # self.resultmap = tempresult.copy()
-        print(self.seedmap, tempresult, self.resultmap)
-        if not self._is_closure(tempresult):
+        print(tempresult)
+        # print(self.seedmap, tempresult, self.resultmap)
+        if not self._is_closure(tempresult) and self.retry <= self.maxretry:
             self.resultmap = tempresult.copy()
             self._determining_seed()
             self.start()
@@ -110,10 +116,13 @@ def main():
         "yinni": (1, 1, 0.5)
     }
 
-    seed_name = ["riben", "balin", "taiguo"]
-    seedlist = [datamap[seed] for seed in seed_name]
-    kmeans = KMeans(3, datamap, seedlist)
+    country_name = ["riben", "balin", "taiguo"]
+    seedlist = [datamap[seed] for seed in country_name]
+    k = 3
+    seed_name = list(range(k))
+    kmeans = KMeans(k, datamap, seed_name, seedlist)
     kmeans.start()
+    print("======final result========")
     print(kmeans.resultmap)
 
 if __name__ == "__main__":
