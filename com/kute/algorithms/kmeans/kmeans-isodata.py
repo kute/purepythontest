@@ -7,6 +7,10 @@
 @ __file__: kmeans-isodata.py
 @ __mtime__: 2017/2/21 11:49
 
+http://www.cnblogs.com/huadongw/p/4101422.html
+
+
+
 """
 
 

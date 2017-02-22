@@ -11,6 +11,8 @@ kmeans 二维点坐标 计算 图示
 
 测试样本：two_dimension_location.txt
 
+运行结果图见: kmeans-result.png
+
 """
 
 import numpy as np
@@ -29,13 +31,12 @@ np.random.seed(2017)
 
 class Kmeans(object):
 
-    def __init__(self, k, filepath, seedloc, showfigure=True):
+    def __init__(self, k, filepath, seedloc):
         if not filepath:
             raise ValueError("should special the file path.")
         self.k = k
         self.filepath = filepath
         self.nlocationarray = None
-        self.showfigure = showfigure or True
         self.linestyles = ['bo', 'ro', 'go', 'yo', 'ko', 'mo', 'co']
 
         self._load_txt()
@@ -144,7 +145,7 @@ class Kmeans(object):
 
 def main():
     filepath = "two_dimension_location.txt"
-    kmeans = Kmeans(4, filepath, None, True)
+    kmeans = Kmeans(4, filepath, None)
     print(kmeans.result)
     kmeans.show_figure()
 
