@@ -107,6 +107,7 @@ class Kmeans(object):
 
     def show_figure(self):
         linestylearray = np.random.choice(self.linestyles, self.k + 1, replace=False)
+        print(linestylearray)
         plt.figure(1)
         plt.subplot(2, 1, 1)
         lines = plt.plot(self.nlocationarray[:, 0], self.nlocationarray[:, 1], linestylearray[0])
@@ -143,7 +144,7 @@ class Kmeans(object):
 
 def main():
     filepath = "two_dimension_location.txt"
-    kmeans = Kmeans(3, filepath, None, True)
+    kmeans = Kmeans(4, filepath, None, True)
     print(kmeans.result)
     kmeans.show_figure()
 
