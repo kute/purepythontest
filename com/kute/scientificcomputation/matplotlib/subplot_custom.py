@@ -12,6 +12,11 @@ http://matplotlib.org/users/gridspec.html
 
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+from pylab import mpl
+# 中文字体设置
+mpl.rcParams['font.sans-serif'] = ['SimHei']
+# - 符号显示为方块问题
+mpl.rcParams['axes.unicode_minus'] = False
 
 
 def main():

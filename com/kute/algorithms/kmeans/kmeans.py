@@ -14,20 +14,29 @@ kmeans 二维点坐标 计算 图示
 """
 
 import numpy as np
+from matplotlib import pyplot as plt
 from math import sqrt, pow
 from collections import defaultdict
+
+from pylab import mpl
+# 中文字体设置
+mpl.rcParams['font.sans-serif'] = ['SimHei']
+# - 符号显示为方块问题
+mpl.rcParams['axes.unicode_minus'] = False
 
 np.random.seed(2017)
 
 
 class Kmeans(object):
 
-    def __init__(self, k, filepath, seedloc):
+    def __init__(self, k, filepath, seedloc, showfigure=True):
         if not filepath:
             raise ValueError("should special the file path.")
         self.k = k
         self.filepath = filepath
         self.nlocationarray = None
+        self.showfigure = showfigure or True
+        self.linestyles = ['bo', 'ro', 'go', 'yo', 'ko', 'mo', 'co']
 
         self._load_txt()
         self.shape = self.nlocationarray.shape
@@ -44,8 +53,11 @@ class Kmeans(object):
         return self.nlocationarray[indexary]
 
     def _load_txt(self):
+        """加载数据样本
+        """
         with open(self.filepath) as fp:
             self.nlocationarray = np.loadtxt(fp, delimiter=",", dtype=float)
+            print(self.nlocationarray)
             if len(self.nlocationarray) == 0:
                 raise ValueError("there is not enough data in file {}.".format(self.filepath))
 
@@ -79,7 +91,7 @@ class Kmeans(object):
         return True
 
     def _determining_seed(self):
-        """选取新的种子点（点坐标取均值）
+        """选取点群的中心点（点坐标取均值，精度6位）
         """
         if len(self.resultmap) > 0:
             newseedarray = []
@@ -93,6 +105,24 @@ class Kmeans(object):
             return True
         return False
 
+    def show_figure(self):
+        linestylearray = np.random.choice(self.linestyles, self.k + 1, replace=False)
+        plt.figure(1)
+        plt.subplot(2, 1, 1)
+        lines = plt.plot(self.nlocationarray[:, 0], self.nlocationarray[:, 1], linestylearray[0])
+        plt.title("原始点群分布")
+        plt.xlabel("x label")
+        plt.ylabel("y label")
+        # plt.figure(2)
+        plt.subplot(2, 1, 2)
+        for index, sublinelist in self.resultmap.items():
+            sublinearray = np.array(sublinelist)
+            plt.plot(sublinearray[:, 0], sublinearray[:, 1], linestylearray[index + 1])
+        plt.title("聚类结果点群分布")
+        plt.xlabel("x label")
+        plt.ylabel("y label")
+        plt.show()
+
     def _start(self):
         taskresultmap = defaultdict(list)
         for location in self.nlocationarray:
@@ -101,10 +131,6 @@ class Kmeans(object):
                 distancemap[index] = self._euclidean_distance(location, seedloc)
             key_min_distance = min(distancemap, key=distancemap.get)
             taskresultmap[key_min_distance].append(location)
-        # print(self.seedlocarray, end="\n\n")
-        # print(taskresultmap)
-        # self.resultmap = taskresultmap.copy()
-        # self._determining_seed()
         if not self._is_closure(taskresultmap):
             self.resultmap = taskresultmap.copy()
             if self._determining_seed():
@@ -117,19 +143,9 @@ class Kmeans(object):
 
 def main():
     filepath = "two_dimension_location.txt"
-    kmeans = Kmeans(3, filepath, None)
-    # print(kmeans.result)
-
-    a = np.array([[1, 2], [3, 4]])
-    b = np.array([[4, 3], [2, 1]])
-    print(list(a), list(b))
-    # a.sort(axis=0)
-    # b.sort(axis=0)
-    # for index, subarray in enumerate(a):
-    #     print(set(subarray) - set(b[index]))
-    # print(a)
-    # print(b)
-    # print(a == b)
+    kmeans = Kmeans(3, filepath, None, True)
+    print(kmeans.result)
+    kmeans.show_figure()
 
 
 if __name__ == "__main__":

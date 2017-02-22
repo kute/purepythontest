@@ -13,6 +13,12 @@ import matplotlib
 from matplotlib import pyplot as plt
 from math import e, sin, pi, tan
 
+from pylab import mpl
+# 中文字体设置
+mpl.rcParams['font.sans-serif'] = ['SimHei']
+# - 符号显示为方块问题
+mpl.rcParams['axes.unicode_minus'] = False
+
 
 def main():
     print(matplotlib.__version__)
