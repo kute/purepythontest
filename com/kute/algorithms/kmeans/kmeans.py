@@ -45,7 +45,7 @@ class Kmeans(object):
 
         self.resultmap = defaultdict(list)
 
-        self._start()
+        self.start()
 
     def _gen_seed(self):
         """从样本中随机出k个点
@@ -58,7 +58,7 @@ class Kmeans(object):
         """
         with open(self.filepath) as fp:
             self.nlocationarray = np.loadtxt(fp, delimiter=",", dtype=float)
-            print(self.nlocationarray)
+            # print(self.nlocationarray)
             if len(self.nlocationarray) == 0:
                 raise ValueError("there is not enough data in file {}.".format(self.filepath))
 
@@ -108,7 +108,7 @@ class Kmeans(object):
 
     def show_figure(self):
         linestylearray = np.random.choice(self.linestyles, self.k + 1, replace=False)
-        print(linestylearray)
+        # print(linestylearray)
         plt.figure(1)
         plt.subplot(2, 1, 1)
         lines = plt.plot(self.nlocationarray[:, 0], self.nlocationarray[:, 1], linestylearray[0])
@@ -125,7 +125,7 @@ class Kmeans(object):
         plt.ylabel("y label")
         plt.show()
 
-    def _start(self):
+    def start(self):
         taskresultmap = defaultdict(list)
         for location in self.nlocationarray:
             distancemap = {}
@@ -136,7 +136,7 @@ class Kmeans(object):
         if not self._is_closure(taskresultmap):
             self.resultmap = taskresultmap.copy()
             if self._determining_seed():
-                self._start()
+                self.start()
 
     @property
     def result(self):
@@ -146,6 +146,7 @@ class Kmeans(object):
 def main():
     filepath = "two_dimension_location.txt"
     kmeans = Kmeans(4, filepath, None)
+    kmeans.start()
     print(kmeans.result)
     kmeans.show_figure()
 

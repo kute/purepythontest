@@ -15,31 +15,46 @@ k-means ++ 算法: 解决初始选择种子点
     重复第（2）和第（3）步直到所有的K个种子点都被选出来。
     进行K-Means算法。
 
+http://rosettacode.org/wiki/K-means%2B%2B_clustering
+
 
 """
 
 from com.kute.algorithms.kmeans.kmeans import Kmeans
+import numpy as np
 
 
-class KmeansPlus(Kmeans):
+class KmeansPlusPlus(Kmeans):
 
-    def __init__(self, k, filepath, seedloc):
+    def __init__(self, k, filepath):
 
         self.k = k
         self.filepath = filepath
-        self.seedloc = seedloc or self._select_seed()
+        self.seedloclist = []
 
-        Kmeans.__init__(self, k, filepath, seedloc)
+        Kmeans.__init__(self, k, filepath, None)
+
+        # 挑选 种子点
+        self.seedlocarray = self._select_seed()
 
     def _select_seed(self):
-        return []
+        # 先随机选一个种子点
+        self.seedloclist.append(self.nlocationarray[np.random.choice(self.shape[0], 1, replace=False)][0])
+        for seedindex in range(1, self.k):
+            print(seedindex)
+
+
+
+        self.seedloclist = self.nlocationarray[np.random.choice(self.shape[0], 3, replace=False)]
+        return np.array(self.seedloclist)
 
 
 def main():
     filepath = "two_dimension_location.txt"
-    plus = KmeansPlus(4, filepath, None)
-    print(plus.resultmap)
-    plus.show_figure()
+    plus = KmeansPlusPlus(4, filepath)
+    plus.start()
+    # print(plus.resultmap)
+    # plus.show_figure()
 
 
 if __name__ == '__main__':
