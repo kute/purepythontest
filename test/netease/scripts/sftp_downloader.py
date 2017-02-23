@@ -175,10 +175,10 @@ class LogDownloader(object):
             cpunum = cpu_count()
             print("current use {} cpu:".format(cpunum))
             # 开启多线程(协程)
-            # pool = Pool(cpunum)
-            # pool.map(self._download, f.readlines())
-            for line in f:
-                self._download(line)
+            pool = Pool(10)
+            pool.map(self._download, f.readlines())
+            # for line in f:
+            #     self._download(line)
 
 
 def main():

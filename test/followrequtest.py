@@ -29,6 +29,8 @@ url = "http://10.164.96.127:8282/api/v1/products/a2869674571f77b5a0867c3d71db585
 
 threadurl = "http://comment.news.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/{}"
 
+userextpurl = "http://223.252.207.32/extapi/v1/app/products/aac69c917e1787ad7bd86cd86afe6efc/users/{}/exp"
+
 
 def dopost(passport):
     body = dict(
@@ -54,8 +56,15 @@ def doget(docId):
         print(e)
 
 
+def dogetuserext(passport):
+    try:
+        requests.get(userextpurl.format(passport))
+    except Exception as e:
+        print(e)
+
+
 def main():
-    filename = "docidlist.txt"
+    filename = "flow_user_ip.txt"
     total = 0
     with open(filename) as f:
         pool = Pool(20)
@@ -63,14 +72,15 @@ def main():
         for passport in f:
             plist.append(passport.strip())
             if len(plist) >= 100:
-                # pool.map(dopost, plist)
                 total += 100
                 print("deal {}".format(total))
-                pool.map(doget, plist)
+                pool.map(dogetuserext, plist)
                 plist.clear()
         if len(plist) > 0:
-            pool.map(doget, plist)
+            total += len(plist)
+            pool.map(dogetuserext, plist)
             plist.clear()
+        print("total num:{}".format(total))
 
 
 if __name__ == "__main__":

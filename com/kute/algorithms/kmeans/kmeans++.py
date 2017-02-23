@@ -22,6 +22,7 @@ http://rosettacode.org/wiki/K-means%2B%2B_clustering
 
 from com.kute.algorithms.kmeans.kmeans import Kmeans
 import numpy as np
+import random
 
 
 class KmeansPlusPlus(Kmeans):
@@ -40,8 +41,26 @@ class KmeansPlusPlus(Kmeans):
     def _select_seed(self):
         # 先随机选一个种子点
         self.seedloclist.append(self.nlocationarray[np.random.choice(self.shape[0], 1, replace=False)][0])
-        for seedindex in range(1, self.k):
-            print(seedindex)
+
+        for seednum in range(1, self.k):
+            distancesum = 0.0
+            dotdistancemap = {}
+            for dotindex, dotloc in enumerate(self.nlocationarray):
+
+                distancedotseedmap = {}  # 存储 点群与所有的种子点的距离
+                for seedindex, seedloc in enumerate(self.seedloclist):
+                    distancedotseedmap[seedindex] = self._euclidean_distance(dotloc, seedloc)
+                mindistancekey = min(distancedotseedmap, key=distancedotseedmap.get)  # 与种子点距离最小的key
+                mindistance = distancedotseedmap[mindistancekey]
+
+                distancesum += mindistance
+                dotdistancemap[dotindex] = mindistance
+
+            randomvalue = distancesum * random.random()
+            for idx, iddistance in dotdistancemap.items():
+                if randomvalue - iddistance <= 0:
+                    self.seedloclist.append(self.nlocationarray[idx])
+                    break
 
 
 
@@ -50,9 +69,10 @@ class KmeansPlusPlus(Kmeans):
 
 
 def main():
-    filepath = "two_dimension_location.txt"
-    plus = KmeansPlusPlus(4, filepath)
-    plus.start()
+    print(random.random())
+    # filepath = "two_dimension_location.txt"
+    # plus = KmeansPlusPlus(4, filepath)
+    # plus.start()
     # print(plus.resultmap)
     # plus.show_figure()
 
