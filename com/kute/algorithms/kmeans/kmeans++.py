@@ -58,23 +58,22 @@ class KmeansPlusPlus(Kmeans):
 
             randomvalue = distancesum * random.random()
             for idx, iddistance in dotdistancemap.items():
-                if randomvalue - iddistance <= 0:
+                randomvalue -= iddistance
+                if randomvalue <= 0:
                     self.seedloclist.append(self.nlocationarray[idx])
                     break
-
-
-
-        self.seedloclist = self.nlocationarray[np.random.choice(self.shape[0], 3, replace=False)]
+        print(self.seedloclist)
+        # self.seedloclist = self.nlocationarray[np.random.choice(self.shape[0], 3, replace=False)]
         return np.array(self.seedloclist)
 
 
 def main():
     print(random.random())
-    # filepath = "two_dimension_location.txt"
-    # plus = KmeansPlusPlus(4, filepath)
-    # plus.start()
+    filepath = "two_dimension_location.txt"
+    plus = KmeansPlusPlus(4, filepath)
+    plus.start()
     # print(plus.resultmap)
-    # plus.show_figure()
+    plus.show_figure()
 
 
 if __name__ == '__main__':
