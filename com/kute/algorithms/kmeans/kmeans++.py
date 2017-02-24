@@ -21,19 +21,20 @@ http://rosettacode.org/wiki/K-means%2B%2B_clustering
 """
 
 from com.kute.algorithms.kmeans.kmeans import Kmeans
+from com.kute.data.faker.genpoint import PointDataGenerator
 import numpy as np
 import random
 
 
 class KmeansPlusPlus(Kmeans):
 
-    def __init__(self, k, filepath):
+    def __init__(self, k, filepath, nlocationarray):
 
         self.k = k
         self.filepath = filepath
         self.seedloclist = []
 
-        Kmeans.__init__(self, k, filepath, None)
+        Kmeans.__init__(self, k, filepath, nlocationarray, None)
 
         # 挑选 种子点
         self.seedlocarray = self._select_seed()
@@ -69,8 +70,15 @@ class KmeansPlusPlus(Kmeans):
 
 def main():
     print(random.random())
+
+    # 测试数据-1
     filepath = "two_dimension_location.txt"
-    plus = KmeansPlusPlus(4, filepath)
+
+    # 测试数据-2
+    faker = PointDataGenerator(2, 200, 20)
+    nlocationarray = faker.data
+
+    plus = KmeansPlusPlus(3, filepath, nlocationarray)
     plus.start()
     # print(plus.resultmap)
     plus.show_figure()

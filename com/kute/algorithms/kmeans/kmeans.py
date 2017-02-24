@@ -31,15 +31,17 @@ np.random.seed(2017)
 
 class Kmeans(object):
 
-    def __init__(self, k, filepath, seedloc):
+    def __init__(self, k, filepath, nlocationarray, seedloc):
         if not filepath:
             raise ValueError("should special the file path.")
         self.k = k
         self.filepath = filepath
-        self.nlocationarray = None
         self.linestyles = ['bo', 'ro', 'go', 'yo', 'ko', 'mo', 'co']
 
-        self._load_txt()
+        if len(nlocationarray) > 0:
+            self.nlocationarray = nlocationarray
+        else:
+            self._load_txt()
         self.shape = self.nlocationarray.shape
         self.seedlocarray = seedloc or self._gen_seed()
 
@@ -145,7 +147,7 @@ class Kmeans(object):
 
 def main():
     filepath = "two_dimension_location.txt"
-    kmeans = Kmeans(4, filepath, None)
+    kmeans = Kmeans(4, filepath, None, None)
     kmeans.start()
     print(kmeans.result)
     kmeans.show_figure()
