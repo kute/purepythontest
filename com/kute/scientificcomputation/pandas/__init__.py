@@ -10,6 +10,7 @@ http://pandas.pydata.org/pandas-docs/stable/
 
 http://pda.readthedocs.io/en/latest/chp5.html
 http://pandas.pydata.org/pandas-docs/stable/io.html
+http://pandas.pydata.org/pandas-docs/stable/api.html
 
 
 

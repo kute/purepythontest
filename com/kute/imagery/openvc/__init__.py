@@ -8,6 +8,7 @@
 @ __mtime__: 2017/2/27 18:20
 
 http://opencv.org
+http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_tutorials.html
 https://github.com/spmallick/learnopencv
 
 """
