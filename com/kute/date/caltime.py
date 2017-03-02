@@ -20,7 +20,7 @@ def perf_counter(function):
         start = time.perf_counter()
         result = function(*args, **kwargs)
         end = time.perf_counter()
-        print("The function[%s] use total time is %s s." % (function.__name__, end - start))
+        print("The function[%s(%s, %s)] use total time is %s s." % (function.__name__, args, kwargs, end - start))
         return result
     return _caltime
 
@@ -31,6 +31,6 @@ def process_time(function):
         start = time.process_time()
         result = function(*args, **kwargs)
         end = time.process_time()
-        print("The function[%s] use total time is %s s." % (function.__name__, (end - start)))
+        print("The function[%s(%s, %s)] use total time is %s s." % (function.__name__, args, kwargs, (end - start)))
         return result
     return _caltime
