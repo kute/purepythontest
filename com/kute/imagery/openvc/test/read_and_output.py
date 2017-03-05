@@ -14,7 +14,7 @@ import cv2
 def read_and_output():
     frame = 'frame'
     cv2.namedWindow(frame, cv2.WINDOW_AUTOSIZE)
-    im = cv2.imread('stinkbug.png')
+    im = cv2.imread('images/stinkbug.png')
     cv2.imshow(frame, im)
     if cv2.waitKey(0) == ord('s'):
         cv2.imwrite('stinkbug2.png', im)
@@ -37,6 +37,9 @@ def vedio_test():
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # HSVf
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        print(frame.shape)
+        print('==================')
+        print(hsv.shape)
         if cv2.waitKey(0) & 0xFF == ord('s'):
             cv2.imwrite('frame.png', frame)
             cv2.imwrite('gray.png', gray)

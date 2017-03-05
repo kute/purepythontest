@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'kute'
-# __mtime__ = '2017/3/2 22:56'
+# __mtime__ = '2017/3/5 12:27'
 
 """
-
-函数缓存
+http://python.jobbole.com/82546/
 
 """
 
