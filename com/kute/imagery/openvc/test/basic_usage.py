@@ -10,7 +10,7 @@
 
 import cv2
 from PIL import Image
-
+from itertools import count
 
 def baseinfo(filename):
     img = cv2.imread(filename)
@@ -38,17 +38,18 @@ def baseinfo(filename):
 
 
 def bitwise_test():
-    img = cv2.imread('images/girl.jpg')
+    img = cv2.imread('images/girl.jpg')  # shape = (1000, 650, 3)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    print(gray)
-    _, mask = cv2.threshold(gray, 172, 255, cv2.THRESH_BINARY)
-    print(mask)
+    # print(count(list(gray)))
+    _, mask = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    # print(mask)
     maskinv = cv2.bitwise_not(gray, mask=mask)
-    print(maskinv)
+    # print(maskinv)
 
-    cv2.imshow('window', mask)
-    destroy()
+    # cv2.namedWindow('window', cv2.WINDOW_NORMAL)
+    # cv2.imshow('window', mask)
+    # destroy()
 
 
 def destroy():
@@ -60,6 +61,8 @@ def main():
     filename = 'images/a.jpg'
     # baseinfo(filename)
     bitwise_test()
+    import itertools
+    al = [[1, 2, 3], [4, 5, 6]]
 
 
 if __name__ == '__main__':

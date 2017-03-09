@@ -5,8 +5,9 @@
 # __mtime__ = '2016/11/16 21:24'
 
 """
-
+美化pandas 数据输出 table 显示
 https://github.com/HHammond/PrettyPandas
+http://prettypandas.readthedocs.io/en/latest/
 
 """
 

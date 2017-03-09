@@ -51,7 +51,11 @@ def main():
     frame = DataFrame(f)  # 列名 为 ff和fff， 索引为series索引
     frame = DataFrame(g)
 
-
+    # na_values：表明哪些值需要被视为 NAN
+    df = pd.read_csv('2012.csv', na_values=[''])
+    # 过滤 ：http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.filter.html
+    df1 = df.filter(items=[col for col in df.columns if col not in ['aa', 'ff']])  # 过滤某些列
+    print(df1)
 
 if __name__ == '__main__':
     main()

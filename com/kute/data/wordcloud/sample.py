@@ -34,15 +34,6 @@ def main():
     plt.imshow(img)
     plt.axis('off')
 
-    # custom
-    mask = np.array(Image.open(os.path.join(basepath, 'stinkbug.png')))
-    text = open(os.path.join(basepath, 'a.txt')).read()
-    plt.figure(2)
-    # plt.subplot(3, 1, 3)
-    img = WordCloud(max_words=400, mask=mask, width=600, height=800, margin=10).generate(text)
-    plt.imshow(img)
-    plt.axis('off')
-
     plt.show()
 
 

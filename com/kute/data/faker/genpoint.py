@@ -47,7 +47,7 @@ class PointDataGenerator(object):
 
 
 def main():
-    p = PointDataGenerator(2, 10, 20)
+    p = PointDataGenerator(dimension=2, nums=10, r=20)
     print(p.data)
 
 
