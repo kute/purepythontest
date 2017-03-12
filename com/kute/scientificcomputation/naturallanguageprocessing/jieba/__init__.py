@@ -2,16 +2,11 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'kute'
-# __mtime__ = '2017/2/11 09:44'
+# __mtime__ = '2017/3/11 14:07'
 
 """
 
-http://www.nltk.org/
-
-http://www.nltk.org/book/
-
-http://www.nltk.org/nltk_data/
-http://www.nltk.org/data.html
+https://github.com/fxsjy/jieba
 
 """
 

@@ -9,8 +9,14 @@
 """
 
 import cv2
+import numpy as np
 from PIL import Image
-from itertools import count
+from collections import Counter
+
+
+if not cv2.useOptimized():
+    cv2.setUseOptimized(1)
+
 
 def baseinfo(filename):
     img = cv2.imread(filename)
@@ -38,18 +44,22 @@ def baseinfo(filename):
 
 
 def bitwise_test():
-    img = cv2.imread('images/girl.jpg')  # shape = (1000, 650, 3)
+    # img = cv2.imread('images/captcha.png')
+    # img = cv2.resize(img, (600, 400), interpolation=cv2.INTER_CUBIC)
+    img = cv2.imread('images/girl.jpg')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # print(count(list(gray)))
     _, mask = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
-    # print(mask)
+    mask1 = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
+    mask2 = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
     maskinv = cv2.bitwise_not(gray, mask=mask)
-    # print(maskinv)
-
-    # cv2.namedWindow('window', cv2.WINDOW_NORMAL)
-    # cv2.imshow('window', mask)
-    # destroy()
+    #
+    cv2.namedWindow('window', cv2.WINDOW_NORMAL)
+    cv2.imshow('window', mask)
+    cv2.imshow('window1', mask1)
+    cv2.imshow('window2', mask2)
+    # cv2.imshow('window2', img)
+    destroy()
 
 
 def destroy():
@@ -61,8 +71,6 @@ def main():
     filename = 'images/a.jpg'
     # baseinfo(filename)
     bitwise_test()
-    import itertools
-    al = [[1, 2, 3], [4, 5, 6]]
 
 
 if __name__ == '__main__':
