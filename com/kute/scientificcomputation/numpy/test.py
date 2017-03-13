@@ -92,6 +92,10 @@ def main():
     # 从指定序列里随机选取n个元素，不重复，还可以指定元素出现的概率
     print(np.random.choice([1, 2, 3, 8], size=2, replace=False))
 
+    # 矩阵
+    ld = np.matrix(np.zeros((4, 5), dtype=int))
+    print(ld)
+
 
 if __name__ == '__main__':
     main()

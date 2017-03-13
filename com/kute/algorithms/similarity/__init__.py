@@ -6,6 +6,11 @@
 
 """
 
+相似度研究
+
+编辑距离：https://en.wikipedia.org/wiki/Levenshtein_distance
+http://www.cnblogs.com/ymind/archive/2012/03/27/fast-memory-efficient-Levenshtein-algorithm.html（这里面少了一步，就是更新v0）
+
 """
 
 
