@@ -26,6 +26,7 @@ artificial intelligence run rampant.
     print(blob.tags)
     print(blob.noun_phrases)
     print(blob.words)
+    print(blob.word_counts)
     print(blob.sentences)
     print(blob.sentiment)
 

@@ -6,7 +6,7 @@
 
 """
 
-相似度研究
+相似度研究 诶 都在看些别人啃剩下的，但是都是经典 还是需要理解的
 
 编辑距离：https://en.wikipedia.org/wiki/Levenshtein_distance
 http://www.cnblogs.com/ymind/archive/2012/03/27/fast-memory-efficient-Levenshtein-algorithm.html（这里面少了一步，就是更新v0）
