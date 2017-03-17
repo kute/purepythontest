@@ -12,11 +12,8 @@ cursor.callproc   执行存储过程
 
 """
 
+import pymysql
 import pymysql.cursors
-from kute.easylog.easylog import geteasylog
-
-
-easylog = geteasylog()
 
 
 class MysqlUtil(object):
@@ -103,7 +100,7 @@ class MysqlUtil(object):
             connection.commit()
         except Exception as e:
             connection.rollback()
-            easylog.error("error, rollback", e.args)
+            print("error, rollback", e.args)
         finally:
             connection.close()
 
@@ -134,7 +131,13 @@ def main():
     # resultall = util.select_all(sql, ("9", ), 3)
     # print(resultall)  # tuple(tuple)
 
-    # 5. transaction example
+    # 5. select in
+    # sql = "select * from teacher where id in %s"
+    # params = (1, 2, 3)
+    # resultall = util.select_all(sql, (params, ))
+    # print(resultall)
+
+    # 6. transaction example
     # sql = "insert into teacher(`id`, `name`, `lastupapptime`, `topicid`) values(%s, %s, %s, %s)"
     # argslist = [(str(i), "kute" + str(i), "2016-08-30 17:21:3" + str(i), "1299" + str(i)) for i in range(8, 10)]
     # util.transaction_sql(sql, argslist)
