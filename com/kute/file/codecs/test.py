@@ -15,8 +15,10 @@ import codecs
 
 
 def main():
-    s = "迈/b 向/e 充/b 满/e 希/b 望/e 的/s 新/s 世/b 纪/e —/b —/e 一/b 九/m 九/m 八/m 年/e 新/b 年/e 讲/b 话/e （/s 附/s 图/b 片/e １/s 张/s ）/s"
-    print(list(map(lambda x: x.split("/"), s.split())))
+    with codecs.open('read.txt', 'r', 'utf-8') as rfile:
+        content = rfile.read()
+        print(content)
+        print(type(content))
 
 
 if __name__ == "__main__":

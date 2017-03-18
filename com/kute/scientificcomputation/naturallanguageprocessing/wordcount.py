@@ -16,6 +16,34 @@ import jieba
 from textblob import TextBlob
 
 
+class WordCount(object):
+
+    def __init__(self, data=None):
+        self.data = data
+
+    def count(self, n=None):
+        return Counter(self.data).most_common(n)
+
+    def count_for_en(self):
+        return TextBlob(self.data).word_counts
+
+    def count_for_zh(self, n=None):
+        self.data = jieba.lcut(self.data)
+        return self.count(n)
+
+    def words_for_en(self):
+        return TextBlob(self.data).words
+
+    def words_for_zh(self):
+        return jieba.lcut(self.data)
+
+    def _count_default_dict(self):
+        dd = defaultdict(int)
+        for word in self.data:
+            dd[word] += 1
+        return dd
+
+
 def main():
     s1 = 'No matter how you count the words, you can only write to the file once all words are counted; otherwise ' \
          'you are writing once for each "count", and as soon as the word appears more than once, you will have ' \
@@ -27,21 +55,14 @@ def main():
          '征空间变为文档概念空间。概念向量之问使用内积的夹角余弦相似度计算比原来基于原文本向量的相似度计算更可靠'
 
     # 未分词直接统计单个单词的频率
-    print(Counter(s1).most_common())
-    print(Counter(s2).most_common())
-    print(test1(s1))
-    print(test1(s2))
+    print(WordCount(s1).count())
+    print(WordCount(s1)._count_default_dict())
+    print(WordCount(s2).count())
+    print(WordCount(s2)._count_default_dict())
 
     # 分词后统计
-    print(TextBlob(s1).word_counts)
-    print(Counter(jieba.lcut(s2)).most_common())
-
-
-def test1(s):
-    dd = defaultdict(int)
-    for word in s:
-        dd[word] += 1
-    return dd
+    print(WordCount(s1).count_for_en())
+    print(WordCount(s2).count_for_zh())
 
 
 if __name__ == "__main__":
