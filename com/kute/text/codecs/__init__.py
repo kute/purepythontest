@@ -8,6 +8,7 @@
 @ __mtime__: 2017/2/8 15:16
 
 https://docs.python.org/dev/library/codecs.html
+https://docs.python.org/3.5/library/codecs.html
 
 处理编码转换
 

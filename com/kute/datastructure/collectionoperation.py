@@ -31,6 +31,11 @@ class CollectionOperation(object):
         for i in range(0, size, unit):
             yield datalist[i: i + unit]
 
+    def subtract(self, list1, list2):
+        """差集
+        """
+        return list(set(list1) - set(list2))
+
 
 def main():
     datalist = [1, 2, 3, 4, 5, 6, 7, 8]

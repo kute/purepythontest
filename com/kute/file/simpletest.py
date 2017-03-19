@@ -9,6 +9,7 @@
 """
 
 import os
+import codecs
 
 _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
 
@@ -38,6 +39,12 @@ def write_by_line(line):
 def write_list_lines(lines):
     with open(file=getfilepath("writefile.txt"), mode="w") as f:
         f.writelines(lines)
+
+
+# 自动转换文件编码读取内容
+def read(file):
+    with codecs.open(file, 'r', 'utf-8') as bf:
+        print(bf.read())
 
 
 def main():

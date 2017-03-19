@@ -26,7 +26,6 @@ import os
 basepath = os.path.dirname(__file__)
 import codecs
 import math
-import numpy as np
 from com.kute.scientificcomputation.naturallanguageprocessing.wordcount import WordCount
 
 
