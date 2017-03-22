@@ -85,10 +85,11 @@ def levenshtein_two_row(s1, s2):
 
 def main():
     # s1, s2 = 'asdf23rsdddfffffffff23rsdfqdfq4', '234rasdfcq23rsdfasdf23'
-    s1, s2 = 'werf', 'rwef4'
+    # s1, s2 = 'werf', 'rwef4'
+    s1, s2 = '国家领导于明日在杭州大剧院访问', '明日基本所有的领导都会在杭州大剧院进行民事访问'
     len1, len2 = len(s1), len(s2)
-    r = levenshtein_distance(len1, len2, s1, s2)
-    print(r, Levenshtein.distance(s1, s2))
+    # r = levenshtein_distance(len1, len2, s1, s2)
+    # print(r, Levenshtein.distance(s1, s2))
     r2 = levenshtein_ld(s1, s2)
     print(r2, Levenshtein.distance(s1, s2))
     r3 = levenshtein_two_row(s1, s2)

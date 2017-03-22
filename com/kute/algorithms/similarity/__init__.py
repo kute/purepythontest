@@ -12,6 +12,9 @@
 http://www.cnblogs.com/ymind/archive/2012/03/27/fast-memory-efficient-Levenshtein-algorithm.html（这里面少了一步，就是更新v0）
 http://www.tuicool.com/articles/ZrqeAbZ
 
+
+http://stackoverflow.com/questions/2380394/simple-implementation-of-n-gram-tf-idf-and-cosine-similarity-in-python
+
 """
 
 
