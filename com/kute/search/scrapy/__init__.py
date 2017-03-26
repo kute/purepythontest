@@ -9,6 +9,11 @@
 
 http://scrapy-chs.readthedocs.io/zh_CN/1.0/intro/tutorial.html
 
+https://scrapy.org/
+
+
+commands: https://doc.scrapy.org/en/1.3/topics/commands.html
+
 """
 
 
