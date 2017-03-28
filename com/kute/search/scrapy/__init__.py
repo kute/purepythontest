@@ -14,6 +14,10 @@ https://scrapy.org/
 
 commands: https://doc.scrapy.org/en/1.3/topics/commands.html
 
+
+
+data -> xpath -> input/output processor -> item pipeline
+
 """
 
 

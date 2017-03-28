@@ -24,6 +24,7 @@ class SegmentFaultSpider(scrapy.Spider):
         for sel in response.xpath("//section"):
             # Item Loader在每个(Item)字段中都包含了一个输入处理器和一个输出处理器
             loader = SegmentFaultItemLoader(item=SegmentFaultItem(), response=response)
+            loader.context['extra_unit_param'] = '个'
             loader.add_value('title', sel.xpath("div[@class='summary']/h2/a/text()").extract())
             loader.add_value('url', "".join(["https://segmentfault.com", sel.xpath("div[@class='summary']/h2/a/@href")[0].extract()]))
             loader.add_value('author', sel.xpath("div[@class='summary']/ul[@class='author list-inline']//a[1]/text()").extract())
