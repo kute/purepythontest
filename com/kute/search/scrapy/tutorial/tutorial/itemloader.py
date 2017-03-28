@@ -6,22 +6,13 @@
 
 """
 
+Item Loader Context : 传递修改 额外的数据
+
 """
 
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Identity, MapCompose, TakeFirst
-from .constant import unit_dict
-
-
-def to_number(origin):
-    """
-    1.9k to 1900
-    """
-    if any(map(lambda e: e in origin, ['k', 'K', 'w', 'W'])):
-        length = len(origin)
-        return int(float(origin[0: length - 1]) * unit_dict[origin[length - 1:]])
-    else:
-        return origin
+from .constant import to_number, add_unit
 
 
 class SegmentFaultItemLoader(ItemLoader):
@@ -31,9 +22,9 @@ class SegmentFaultItemLoader(ItemLoader):
     title_out = TakeFirst()
     url_out = TakeFirst()
     author_out = TakeFirst()
-    vote_out = MapCompose(TakeFirst(), to_number)
-    answer_out = MapCompose(TakeFirst(), to_number)
-    view_out = MapCompose(TakeFirst(), to_number)
+    vote_out = MapCompose(TakeFirst(), to_number, add_unit)
+    answer_out = MapCompose(TakeFirst(), to_number, add_unit)
+    view_out = MapCompose(TakeFirst(), to_number, add_unit)
     createtime_out = TakeFirst()
 
 
