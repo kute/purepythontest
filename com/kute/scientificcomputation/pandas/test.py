@@ -27,6 +27,10 @@ def main():
     frame.year
     frame.year.c
     frame.ix['c']  # 行 访问
+    # 删除 列
+    del frame['year']
+    result = frame.drop(['year', 'pop'], axis=1, errors='ignore')  # axis: 0: rows，1：column; error：删除不存在的列是否抛出异常
+
     frame.rename(columns={'year': 'yearP', 'pop': 'popP'}, inplace=True)  # 重命名列名
     frame.rename(columns=lambda cl: cl + "P", inplace=True)  # 重命名列名
     print(frame.columns)
@@ -55,7 +59,17 @@ def main():
     df = pd.read_csv('2012.csv', na_values=[''])
     # 过滤 ：http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.filter.html
     df1 = df.filter(items=[col for col in df.columns if col not in ['aa', 'ff']])  # 过滤某些列
-    print(df1)
+    # print(df1)
+    print(df1[['Date', 'cc', 'dd']])  # 选取多个列
+    print(df1.query('Date == ["02/01/2012", "01/11/2012"]'))  # 选取Date（注意值类型）值为  02/01/2012  和 01/11/2012
+    df1[df1.cc.isin([0, 2])]
+    print(df1.groupby('cc').filter(lambda x: len(x) > 1)['cc'].value_counts())  # 过滤  cc 列出现次数 <= 1的数据
+    # vc = df1['cc'].value_counts()
+    # print(vc[vc > 1])  # 过滤  cc 列出现次数 <= 1的数据
+    # print(df1['cc'].value_counts())  # word count
+
+    dates = pd.date_range('1/1/2000', periods=8)  # 生成日期
 
 if __name__ == '__main__':
     main()
+

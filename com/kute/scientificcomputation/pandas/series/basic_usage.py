@@ -11,7 +11,7 @@ http://pandas.pydata.org/pandas-docs/stable/text.html
 """
 
 import pandas as pd
-from pandas import Series
+from pandas import Series, DataFrame
 import numpy as np
 
 
@@ -28,11 +28,13 @@ def main():
     a[0]  # 默认索引 从 0 开始
     a[[0, 2]]  # 多个索引访问
 
-    b = Series(data=[1, 2, 3, 4], index=['a', 'b', 'c', 'd'])
+    b = Series(data=[1, 2, 3, 4, 4], index=['a', 'b', 'c', 'd', 'e'])
     b['a']  # 索引访问
     b[['a', 'd']]  # 可以使用索引里的值来选择一个单一值或一个值集
     b.index
     b.values
+    vc = b.value_counts()
+    print(vc[vc > 1], vc[vc > 1].values, vc[vc > 1].index)  # 过滤
 
     # 因为 Series 是带索引的,所以可以把它当做一个字典对待
     mydict = dict(a=1, b=2, c=3, d=4)
@@ -45,6 +47,7 @@ def main():
     a + b
 
     s2 = pd.Series(['a_b_c', 'c_d_e', np.nan, 'f_g_h'])
+    s2.to_csv()
     result = s2.str.split("_")  # value 分隔
 
     result.str.get(1)  # 访问第二个元素
@@ -53,8 +56,10 @@ def main():
     result = s2.str.split("_", expand=True)     # 使用 expand 返回 dataFrame 对象
     result = s2.str.split("_", expand=True, n=1)     # 限制 split 个数
 
-    print(result)
+    # print(result)
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    s = Series([1, 2])
+    print(len(s))

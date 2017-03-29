@@ -19,8 +19,24 @@ class TutorialPipeline(object):
             # 抛出异常, 将此item丢弃, 则不会传递给其他pipeline
             raise DropItem("useless item[{}] and then being droped and will not pass to next pipeline.".format(item))
 
+
+class MysqlPipeline(object):
+    """
+    db pipeline
+    """
+
+    def __init__(self):
+        pass
+
+    def process_item(self, item, spider):
+        pass
+
     def open_spider(self, spider):
-        print('invoke when spider is opened.')
+        pass
 
     def close_spider(self, spider):
-        print('invoke when spider is closed.')
+        pass
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        pass
