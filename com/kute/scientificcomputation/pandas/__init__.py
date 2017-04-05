@@ -26,6 +26,9 @@ http://pandas.pydata.org/pandas-docs/stable/api.html
 cookbook
 https://github.com/jvns/pandas-cookbook
 
+http://nbviewer.jupyter.org/github/donnemartin/data-science-ipython-notebooks/blob/master/pandas/pandas.ipynb
+https://github.com/donnemartin/data-science-ipython-notebooks#pandas
+
 
 """
 

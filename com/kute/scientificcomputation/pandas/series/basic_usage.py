@@ -50,6 +50,8 @@ def main():
     s2.to_csv()
     result = s2.str.split("_")  # value 分隔
 
+    s2.str.contains('c')
+
     result.str.get(1)  # 访问第二个元素
     result.str[1]  # 访问第二个元素
 

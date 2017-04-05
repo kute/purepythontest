@@ -23,10 +23,18 @@ def main():
     index = ['a', 'b', 'c', 'd', 'e']  # 指定 索引,默认 0, 1, ...
     frame = DataFrame(data, columns=column, index=index)
     frame['year']
-    frame['year']['c']
+    frame['year']['c']  # mutil-index
+    frame.loc['c', 'notkey'] = 'newvalue'  # 设置值  loc(rowkey, columnkey)
+    frame.iloc[2, 3] = 'newv'
+    frame.loc['b':'d']
+    frame[frame['notkey'].notnull()]
+    frame.loc[frame.notkey.notnull()]
+    frame.iloc[0:3, :]
     frame.year
     frame.year.c
-    frame.ix['c']  # 行 访问
+    frame.ix['c']  # 行 访问, 推荐使用 loc
+
+
     # 删除 列
     del frame['year']
     result = frame.drop(['year', 'pop'], axis=1, errors='ignore')  # axis: 0: rows，1：column; error：删除不存在的列是否抛出异常

@@ -18,6 +18,9 @@ easylog = geteasylog()
 def main():
     data1 = [1, 9.3, 23, 3, 23.13]
     ary1 = np.array(data1)
+
+    np.where(ary1 > 3, 'x', 'y')
+
     easylog.info(ary1.shape)
     # 打乱
     np.random.shuffle(ary1)
