@@ -10,6 +10,7 @@
 
 import os
 import codecs
+import fileinput
 
 _resources_dir = os.path.join(os.path.dirname(__file__), "resources")
 
@@ -47,8 +48,15 @@ def read(file):
         print(bf.read())
 
 
+def read_user_input():
+    with fileinput.input() as f:
+        for line in f:
+            print(line, f.filename(), f.lineno())
+
+
 def main():
-    read_file()
+    # read_file()
+    read_user_input()
 
 
 if __name__ == '__main__':
