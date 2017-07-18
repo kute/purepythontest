@@ -13,6 +13,10 @@ http://docs.jinkan.org/docs/celery/
 
 """
 
+import sys
+
+sys.path.append(".")
+
 
 def main():
     pass
