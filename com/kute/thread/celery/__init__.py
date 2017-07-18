@@ -10,6 +10,7 @@ Celery: 分布式任务队列
 
 http://www.celeryproject.org/
 http://docs.jinkan.org/docs/celery/
+http://geek.csdn.net/news/detail/128791
 
 """
 
