@@ -32,12 +32,12 @@ kute_result_serializer = 'json'
 
 # schedules
 kute_beat_schedule = {
-    'add-every-30-seconds': {
+    'add-every-5-seconds': {
          'task': 'beat_demo.task1.add',
          'schedule': timedelta(seconds=5),       # 每 5 秒执行一次
          'args': (5, 8)                           # 任务函数参数
     },
-    'multiply-at-some-time': {
+    'multi-at-some-time': {
         'task': 'beat_demo.task2.multi',
         'schedule': crontab(hour=22, minute=26),   # 每天早上 22 点 26 分执行一次
         'args': (3, 7)                            # 任务函数参数

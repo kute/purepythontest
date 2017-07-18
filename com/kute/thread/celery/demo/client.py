@@ -7,7 +7,7 @@
 """
 
 1. 在demo目录下执行: celery worker -A tasks -l info
-2. 然后新打开一个terminal 执行 python client.py
+2. 然后新打开一个terminal 执行 python demo/client.py
 
 """
 
@@ -15,7 +15,7 @@ import celery
 import time
 print(dir(celery.registry))
 
-from tasks import add
+from tasks import add, div
 
 
 def main():
@@ -25,6 +25,10 @@ def main():
         time.sleep(1)
         print("working .....")
     print(result.get(timeout=1))
+
+    print('test div function for logging and retry')
+    r = div(5, 2)
+    print(r)
     print('main end')
 
 

@@ -17,7 +17,9 @@ kute_broker_url = [
 
 kute_result_backend = "redis://:kuteredis@localhost:6379/1"
 
-kute_imports = ("tasks", )
+kute_imports = (
+    "tasks",
+)
 
 kute_accept_content = ['json']
 kute_task_serializer = 'json'
