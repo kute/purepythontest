@@ -18,6 +18,7 @@ from demo_app import task2
 
 # countdown: n秒后开始执行
 # expires: 任务过期时间
+# http://docs.celeryproject.org/en/latest/reference/celery.app.task.html#celery.app.task.Task.apply_async
 task1.add.apply_async(args=[2, 8], countdown=3, expires=4)
 
 # eta: 指定任务被调度的具体时间(datetime类型)
