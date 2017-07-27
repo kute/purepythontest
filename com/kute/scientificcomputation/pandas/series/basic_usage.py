@@ -22,6 +22,7 @@ def main():
     s.str.lower()  # NaN 不会改变
     s.str.len()  # 字符长度
     s.str.strip()
+    print(s)
 
     # Series 带索引的一维数组
     a = Series([1, 2, 3, 4])
@@ -51,6 +52,9 @@ def main():
     result = s2.str.split("_")  # value 分隔
 
     s2.str.contains('c')
+    s2.str.contains('a|b')
+    s2.str.contains('a.*?b')
+    s2.str.contains('a.*?b|b.*?a')
 
     result.str.get(1)  # 访问第二个元素
     result.str[1]  # 访问第二个元素
@@ -63,5 +67,5 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    s = Series([1, 2])
-    print(len(s))
+    s = Series([1, 2, 2, 1, 1, 1, 3, 2, 5, 5])
+    print(s.groupby(axis=0, level=1).count())
