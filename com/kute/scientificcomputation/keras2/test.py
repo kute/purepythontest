@@ -11,14 +11,13 @@
 
 from keras.models import Sequential
 from keras.layers import Dense, Activation
+import keras
 
 
 def main():
-    model = Sequential()
-    model.add(Dense(units=32, input_shape=(784, )))
-    model.add(Activation(10))
-
-    model.compile()
+    y_train = (50000, 1)
+    y_train = keras.utils.to_categorical(y_train, 10)
+    print(y_train)
 
 
 if __name__ == "__main__":

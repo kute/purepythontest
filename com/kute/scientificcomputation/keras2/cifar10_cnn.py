@@ -9,14 +9,17 @@
 
 
 
-'''Train a simple deep CNN on the CIFAR10 small images dataset.
+Train a simple deep CNN on the CIFAR10 small images dataset.
 
 GPU run command with Theano backend (with TensorFlow, the GPU is automatically used):
     THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatx=float32 python cifar10_cnn.py
 
 It gets down to 0.65 test logloss in 25 epochs, and down to 0.55 after 50 epochs.
 (it's still underfitting at that point, though).
-'''
+
+The CIFAR-10 dataset 包含 60000 个 32x32 的图片，分为 50000个训练图片和 10000 测试图片，
+训练图片被分为 5 组 ，每组10000个
+
 """
 from __future__ import print_function
 import keras
@@ -39,6 +42,10 @@ save_dir = os.path.join(os.getcwd(), 'saved_models')
 model_name = 'keras_cifar10_trained_model.h5'
 
 # The data, shuffled and split between train and test sets:
+# x_train: (50000, 32, 32, 3)
+# y_train: (50000, 1)
+# x_test: (10000, 32, 32, 3)
+# (10000, 1)
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
@@ -52,6 +59,9 @@ model = Sequential()
 
 model.add(Conv2D(32, (3, 3), padding='same',
                  input_shape=x_train.shape[1:]))
+
+# 定义一个 激活层，指定激活函数（定义每个节点（神经元）的输入与输出的关系的函数）为 relu
+# 激活函数： http://blog.csdn.net/tiny_grass/article/details/52356939
 model.add(Activation('relu'))
 model.add(Conv2D(32, (3, 3)))
 model.add(Activation('relu'))
