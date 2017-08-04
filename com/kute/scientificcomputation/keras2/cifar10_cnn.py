@@ -35,7 +35,7 @@ import numpy as np
 
 batch_size = 32
 num_classes = 10
-epochs = 200
+epochs = 5
 data_augmentation = True
 num_predictions = 20
 save_dir = os.path.join(os.getcwd(), 'saved_models')
@@ -63,9 +63,13 @@ model.add(Conv2D(32, (3, 3), padding='same',
 # 定义一个 激活层，指定激活函数（定义每个节点（神经元）的输入与输出的关系的函数）为 relu
 # 激活函数： http://blog.csdn.net/tiny_grass/article/details/52356939
 model.add(Activation('relu'))
+
+# 二维卷积层，
 model.add(Conv2D(32, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# 随机断开一定百分比的输入数据，防止拟合
 model.add(Dropout(0.25))
 
 model.add(Conv2D(64, (3, 3), padding='same'))
@@ -75,6 +79,7 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
+# 多维矩阵转为一维
 model.add(Flatten())
 model.add(Dense(512))
 model.add(Activation('relu'))
