@@ -42,10 +42,14 @@ def read(conn, mask):
     if data:
         print('echoing', repr(data), 'to', conn)
         conn.send(data)  # Hope it won't block
+        sel.register(conn, selectors.EVENT_WRITE, write)
     else:
         print('closing', conn)
         sel.unregister(conn)
         conn.close()
+
+def write(conn, mask):
+    pass
 
 # 将需要监控的socket加入监控
 sel.register(sock, selectors.EVENT_READ, accept)
@@ -59,5 +63,8 @@ while True:
         # key.data : 附加对象（函数或者其他值）
         # key.fileobj: 被监控的ready的socket对象
         # mask：
-        callback = key.data
-        callback(key.fileobj, mask)
+        if mask & selectors.EVENT_READ:
+            callback = key.data
+            callback(key.fileobj, mask)
+        elif mask & selectors.EVENT_WRITE:
+            pass
