@@ -76,10 +76,10 @@ def main():
     # test_run_until_complete()
 
     # 测试 循环 计划任务执行
-    # test_call_later()
+    test_call_later()
 
     # 测试 await
-    test_async_await()
+    # test_async_await()
 
 
 if __name__ == '__main__':
