@@ -10,59 +10,76 @@
 
 import asyncio
 import functools
+import logging
+
+
+logging.getLogger("requests").setLevel(logging.WARNING)
 
 
 class EventorLoop(object):
 
-    def __init__(self, loop = None):
-        if not loop:
-            loop = asyncio.get_event_loop()
-        self._loop = loop
+    def __init__(self, loop=None, cancel=False, close_default=True):
+        self._loop = loop or asyncio.get_event_loop()
+        self._cancel = cancel or False
+        self._close_default = close_default or True
 
-    def _close(self):
-        if self._loop.is_closed():
+    def close(self):
+        if not self._close_default or self._loop.is_closed():
             return
-        self._loop.close()
-        self._loop = None
+        if not self._loop.is_running():
+            self._loop.close()
+            self._loop = None
 
-    def _stop(self):
+    def stop(self):
         if self._loop.is_running():
             self._loop.stop()
 
     def _partital(self, callback, args, keywords):
         return functools.partial(callback, *args, **keywords)
 
-    def call_soon(self, thread_safe=False, cancel=False, callback=None, *args, **keywords):
+    def call_soon(self, thread_safe=False, callback=None, *args, **keywords):
         args = self._check_args(args)
         partial = self._partital(callback, args, keywords)
         handler = self._loop.call_soon_threadsafe(partial) if thread_safe else self._loop.call_soon(partial)
-        self._handler_cancel(handler, cancel)
-        self._loop.run_forever()
-        self._close()
+        self._handler_cancel(handler, self._cancel)
+        self._run_forever()
+        self.close()
 
-    def call_later(self, delay, cancel=False, callback=None, *args, **keywords):
+    def call_later(self, delay, callback=None, *args, **keywords):
         args = self._check_args(args)
         partial = self._partital(callback, args, keywords)
         handler = self._loop.call_later(delay, partial)
-        self._handler_cancel(handler, cancel)
-        self._loop.run_forever()
-        self._close()
+        self._handler_cancel(handler, self._cancel)
+        self._run_forever()
+        self.close()
 
-    def call_at(self, when, cancel=False, callback=None, *args, **keywords):
+    def call_at(self, when, callback=None, *args, **keywords):
         args = self._check_args(args)
         partial = self._partital(callback, args, keywords)
         handler = self._loop.call_at(when, partial)
-        self._handler_cancel(handler, cancel)
-        self._loop.run_forever()
-        self._close()
+        self._handler_cancel(handler, self._cancel)
+        self._run_forever()
+        self.close()
+
+    def run_until_complete(self, future):
+        result = self._loop.run_until_complete(future)
+        self.close()
+        return result
+
+    def get_loop(self):
+        return self._loop
 
     def time(self):
         return self._loop.time()
 
     def _check_args(self, args):
         args = args or list()
-        args.insert(0, self._loop)
+        args.insert(0, self)
         return args
+
+    def _run_forever(self):
+        if not self._loop.is_running():
+            self._loop.run_forever()
 
     def _handler_cancel(self, handler=None, cancel=False):
         if handler and cancel:
