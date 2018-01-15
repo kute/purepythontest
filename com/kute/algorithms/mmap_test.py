@@ -26,8 +26,7 @@ import mmap
 import contextlib
 
 
-file = "/Users/kute/work/docs/netease/data/testfile"
-# file = "/Users/kute/work/docs/netease/data/UserInfo"
+file = ""
 findword = "reutetcesnoc"
 replaceword = findword[::-1]
 

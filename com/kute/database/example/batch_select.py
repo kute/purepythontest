@@ -30,14 +30,6 @@ dbconfig = {
     'passport': ''
 }
 
-
-def genfilenamelist(filenameprefix):
-    sublist = [('a' if i <= ord('z') else 'b') + chr(i if i <= ord('z') else i - ord('z') + ord('a') - 1) for i in
-               range(ord('a'), ord('u') + 1)]
-    for sub in sublist:
-        yield '{}{}'.format(filenameprefix, sub)
-
-
 def select_userid(passportlist):
     sql = 'select userid, useremail from UserInfo where useremail in %s'
     # 注意数据库链接，是否要功用一个 还是 新建多个
@@ -60,30 +52,18 @@ def slicesublist(datalist):
 
 def main():
     try:
-        # 第一种方式
-        # pool = Pool(20)
-        # for filename in genfilenamelist('appuser'):
-        #     print("======begin filename:{}=====".format(filename))
-        #     emailary = pd.read_csv(os.path.join(basepath, 'data/{}'.format(filename)), sep="\n", header=None)
-        #     sumlist = slicesublist(list(emailary[0]))
-        #     size = len(sumlist)
-        #     total = 0
-        #     for i in range(0, size, 20):
-        #         subdata = sumlist[i: i + 20]
-        #         total += len(subdata)
-        #         pool.map(select_userid, subdata)
-        #     print("======filename:{} finished end {}".format(filename, total))
-        #     sleep(15)
-
-        # 第二种方式
-        # e = Eventor(threadcount=20, taskunitcount=20, func=select_userid, interval=1)
-        # for filename in genfilenamelist('appuser'):
-        #     print("======begin filename:{}=====".format(filename))
-        #     emailary = pd.read_csv(os.path.join(basepath, 'data/{}'.format(filename)), sep="\n", header=None)
-        #     sumlist = slicesublist(list(emailary[0]))
-        #     e.run_with_tasklist(sumlist)
-        #     sleep(15)
-        print('suggest second.')
+        pool = Pool(20)
+        print("======begin filename:{}=====".format(filename))
+        emailary = pd.read_csv(os.path.join(basepath, 'data/{}'.format(filename)), sep="\n", header=None)
+        sumlist = slicesublist(list(emailary[0]))
+        size = len(sumlist)
+        total = 0
+        for i in range(0, size, 20):
+            subdata = sumlist[i: i + 20]
+            total += len(subdata)
+            pool.map(select_userid, subdata)
+        print("======filename:{} finished end {}".format(filename, total))
+        sleep(15)
     except Exception as e:
         print(e)
 

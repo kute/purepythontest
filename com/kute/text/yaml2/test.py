@@ -13,6 +13,7 @@ import yaml
 import re
 
 
+
 def main():
     with open("mobiles.yml") as f:
         mobiles = yaml.load(f)
