@@ -24,6 +24,11 @@ def main():
     easylog.info(ary1.shape)
     # 打乱
     np.random.shuffle(ary1)
+    np.random.random((2, 3))
+    np.random.rand(2, 3)
+    np.random.randn(2, 3)  # 标准分布
+    np.random.randint(1, 10, (2, 3), dtype=int)  # 整形
+    np.random.random_integers(1, 10, (2, 3))  # 等价 整形
     easylog.info(ary1)
 
     data2 = [[1, 2, 3, 4], [5, 6, 7, 8], [2, 3, 4, 1]]
@@ -96,9 +101,13 @@ def main():
     print(np.random.choice([1, 2, 3, 8], size=2, replace=False))
 
     # 矩阵
-    ld = np.matrix(np.zeros((4, 5), dtype=int))
-    print(ld)
-
+    m1 = np.matrix(np.random.random_integers(1, 5, (3, 1)))  # （3， 1）
+    m2 = np.matrix(np.random.random_integers(1, 5, (1, 2)))  # （1， 2）
+    m3 = np.matrix(np.random.random_integers(1, 5, (2, 4)))  # （2， 4）
+    m4 = np.matrix(np.random.random_integers(1, 5, (1, 5)))  # （1， 5）
+    print((m1 * m2) * m3 == m1 * (m2 * m3))  # 矩阵乘法
+    m1.T  # 转置
+    print((m1 * m2).T == m2.T * m1.T)
 
 if __name__ == '__main__':
     main()

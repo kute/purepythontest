@@ -9,16 +9,13 @@
 
 """
 
-
-from kute.easylog.easylog import geteasylog
-
-
-easylog = geteasylog()
+import os
+from com.kute.file.file_util import get_dir, get_sub_dir
 
 
 def main():
-    easylog.info("test easylog info.")
-    easylog.warn("test easylog warn")
+    print(get_dir(os.path.dirname(__file__)))
+    print(get_sub_dir("image"))
 
 
 if __name__ == "__main__":

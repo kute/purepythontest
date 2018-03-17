@@ -53,10 +53,15 @@ def example_3():
     print("total value is {}".format(result))
 
 
+def example_4():
+    pass
+
+
 def main():
     # example_1()
-    example_2()
+    # example_2()
     # example_3()
+    # example_4()
     print("done")
 
 

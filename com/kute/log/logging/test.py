@@ -10,6 +10,7 @@
 
 import logging
 
+# requests log setting
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
