@@ -30,7 +30,24 @@ def main():
     # render_mutil_charts()
 
     # 处理数学表达式
-    render_mathematical_expression()
+    # render_mathematical_expression()
+
+    # 双曲函数
+    run_hyperbolic()
+
+
+def run_hyperbolic():
+    x = np.arange(-10, 10)
+    # plt.plot(x, np.tanh(x))
+
+    plt.figure(1)
+
+    a = [[1, 1], [1, 0]]
+    b = [[1, 1], [1, 0]]
+
+    plt.plot(np.tanh(a + b))
+
+    plt.show()
 
 
 def render_mathematical_expression():
@@ -75,7 +92,8 @@ def render_mutil_charts():
     plt.subplot(211)
     plt.plot([1, 2, 3])
     plt.subplot(2, 1, 2)             # the second subplot in the first figure
-    plt.plot([4, 5, 6])
+    x = np.arange(1, 100)
+    plt.plot(x, np.sinh(x))
 
     plt.figure(2)                # a second figure
     # plt.plot([4, 5, 6])          # creates a subplot(111) by default

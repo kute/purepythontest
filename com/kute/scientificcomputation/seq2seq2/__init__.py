@@ -2,15 +2,11 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'kute'
-# __mtime__ = '2017/7/25 21:42'
+# __mtime__ = '2017/7/22 10:34'
 
 """
 
-https://github.com/fchollet/keras
-
-https://keras.io/
-
-http://keras-cn.readthedocs.io/en/latest/
+https://google.github.io/seq2seq/nmt/
 
 """
 

@@ -20,6 +20,10 @@ IO 多路复用
 
 import selectors
 import socket
+import logging
+from .base_events import BaseEventLoop
+
+logger = logging.getLogger(__package__)
 
 sel = selectors.DefaultSelector()
 
@@ -28,6 +32,41 @@ sock = socket.socket()
 sock.bind(('localhost', 1234))
 sock.listen(100)
 sock.setblocking(False)
+
+
+class BaseSelectorEventLoop(BaseEventLoop):
+
+    def __init__(self, selector=None):
+        if selector is None:
+            selector = selectors.DefaultSelector()
+        logger.debug('Using selector: %s', selector.__class__.__name__)
+        self._selector = selector
+
+    def _add_reader(self, fd, callback, *args):
+        self._check_closed()
+        handle = events.Handle(callback, args, self)
+        try:
+            key = self._selector.get_key(fd)
+        except KeyError:
+            self._selector.register(fd, selectors.EVENT_READ,
+                                    (handle, None))
+        else:
+            mask, (reader, writer) = key.events, key.data
+            self._selector.modify(fd, mask | selectors.EVENT_READ,
+                                  (handle, writer))
+            if reader is not None:
+                reader.cancel()
+
+    def close(self):
+        if self.is_running():
+            raise RuntimeError("Cannot close a running event loop")
+        if self.is_closed():
+            return
+        self._close_self_pipe()
+        super().close()
+        if self._selector is not None:
+            self._selector.close()
+            self._selector = None
 
 
 def accept(sock, mask):
@@ -68,3 +107,11 @@ while True:
             callback(key.fileobj, mask)
         elif mask & selectors.EVENT_WRITE:
             pass
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()

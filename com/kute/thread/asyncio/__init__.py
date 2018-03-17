@@ -7,7 +7,7 @@
 """
 异步编程库
 
-https://docs.python.org/3/library/asyncio.html
+https://docs.python.org/3.5/library/asyncio.html?highlight=asyncio#module-asyncio
 
 http://www.programcreek.com/python/example/81225/asyncio.get_event_loop
 

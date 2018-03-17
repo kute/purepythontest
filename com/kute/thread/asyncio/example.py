@@ -12,6 +12,7 @@ import asyncio
 import time
 import datetime
 import functools
+import signal
 
 
 async def hello():
@@ -71,15 +72,63 @@ def test_async_await():
     loop.close()
 
 
+def test_file_watch():
+    try:
+        from socket import socketpair
+    except ImportError:
+        from asyncio.windows_utils import socketpair
+
+    rsocket, wsocket = socketpair()
+    loop = asyncio.get_event_loop()
+
+    def reader():
+        data = rsocket.recv(100)
+        print("receive data:", data.decode())
+        loop.remove_reader(rsocket)
+        loop.stop()
+
+    loop.add_reader(rsocket, reader)
+
+    loop.call_later(3, wsocket.send, "abcd".encode())
+
+    loop.run_forever()
+
+    rsocket.close()
+    wsocket.close()
+    loop.close()
+
+
+def test_add_signal():
+
+    def on_signal(signame):
+        print('receive signal:{}'.format(signame))
+
+    loop = asyncio.get_event_loop()
+    signalnamelist = ['SIGTERM', 'SIGINT']
+    for signame in signalnamelist:
+        loop.add_signal_handler(getattr(signal, signame), functools.partial(on_signal, signame))
+
+    try:
+        loop.run_forever()
+    finally:
+        loop.close()
+
+
 def main():
     # 测试 等待异步任务执行结束
-    # test_run_until_complete()
+    test_run_until_complete()
 
     # 测试 循环 计划任务执行
-    test_call_later()
+    # test_call_later()
 
     # 测试 await
     # test_async_await()
+
+    # watch file descriptor
+    # test_file_watch()
+
+    # set signal
+    # test_add_signal()
 
 
 if __name__ == '__main__':
