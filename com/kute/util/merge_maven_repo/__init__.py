@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 
 # __author__ = 'kute'
-# __mtime__ = '16/10/22 17:26'
+# __mtime__ = '2018/3/18 15:01'
 
 """
-微型web框架
-https://github.com/bottlepy/bottle
-http://bottlepy.org/docs/dev/
 
 """
 
