@@ -103,11 +103,6 @@ def check_empty(src, dest):
 
 
 def main():
-    # src = "/Users/kute/work/logs/repo/repo2"
-    # src = "/Users/kute/work/mvnrepo"
-    # dest = "/Users/kute/work/logs/repo/repo1"
-    # dest = "/Users/kute/.m2/repository"
-    # merge(src, dest)
     parser = argparse.ArgumentParser(description="This purpose is used to merge two maven repo into one by merge "
                                                  "right repo into left repo and will not override library which left"
                                                  " already has. Finally the right repo will be merged into left repo.")
@@ -122,7 +117,7 @@ def main():
     if args.left and args.right:
         merge(args.left, args.left)
     else:
-        print("Please input repo")
+        print("Please input repo, or use -h to show help.")
 
 
 if __name__ == '__main__':
